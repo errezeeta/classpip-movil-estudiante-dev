@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { MatStepper } from '@angular/material';
 import { Socket } from 'ngx-socket-io';
-
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-juego-de-geocaching',
@@ -25,6 +25,8 @@ export class JuegoDeGeocachingPage implements OnInit {
   respuesta: boolean = false;
   bonus: boolean = false;
   respuestabonus: boolean = false;
+  lat: number;
+  lng: number;
 
 
 
@@ -77,7 +79,7 @@ export class JuegoDeGeocachingPage implements OnInit {
 
   ordenRespuestaCorrectaBasicas: number[] = [3, 1, 1, 0, 2, 0, 3, 3, 2, 0, 2, 1, 1,0 , 3, 2, 0, 0, 1, 3];
   ordenRespuestaCorrectaBonus: number[] = [2, 3, 3, 1, 0, 0, 2, 1, 1, 3, 2, 0, 2, 3, 2, 2, 1, 3, 0, 1, 2];
-
+  map: L.Map;
  
   constructor(
     private sesion: SesionService,
@@ -133,9 +135,30 @@ export class JuegoDeGeocachingPage implements OnInit {
         this.MisAlumnosDelJuegoDeGeocaching = this.calculos.DameListaAlumnosJuegoGeocachingOrdenada(this.juegoSeleccionado.id);
       }
       // this.servidor.connect();
- 
+
   }
-  
+  ngAfterViewInit() {
+    this.initMap();
+  }
+  private initMap(): void {
+    this.map = L.map('map').setView([41.275500, 1.985452],17);
+
+    this.map.invalidateSize();
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 20,
+    minZoom: 13,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(this.map);
+    window.dispatchEvent(new Event('resize'));
+    navigator.geolocation.getCurrentPosition(position => {
+      this.lat = position.coords.latitude;
+      this.lng = position.coords.longitude;
+    });
+    window.setTimeout(function() {
+      console.log(this.lat);
+      new L.Marker([this.lat, this.lng]).addTo(this.map)
+    },1000);
+  }
   empezamos() {
     this.empezado = true;
 
