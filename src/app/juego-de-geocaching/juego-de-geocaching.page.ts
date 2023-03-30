@@ -144,7 +144,7 @@ export class JuegoDeGeocachingPage implements OnInit {
     this.map = L.map('map').setView([41.275500, 1.985452],17);
 
     this.map.invalidateSize();
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v11/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZXJyZXplZXRhIiwiYSI6ImNsZnZnaHVkdDA3MXIzZm83bWduMnc0ZGIifQ.ZKp87eXXMQEO1MNCM_wXKA', {
     maxZoom: 20,
     minZoom: 13,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
