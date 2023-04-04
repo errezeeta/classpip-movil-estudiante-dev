@@ -102,6 +102,12 @@ export class JuegoDeGeocachingPage implements OnInit {
     this.idpreguntasBasicas = this.juegoSeleccionado.PreguntasBasicas;
     this.idpreguntasBonus = this.juegoSeleccionado.PreguntasBonus;
      
+    navigator.geolocation.getCurrentPosition(position => {
+      this.lat = position.coords.latitude;
+      this.lng = position.coords.longitude;
+      this.setLocation();
+    });
+
     this.peticionesAPI.DameInscripcionAlumnoJuegoDeGeocaching(this.alumnoId, this.juegoSeleccionado.id)
     .subscribe (res => {
       this.alumnoJuegoDeGeocaching = res;
@@ -150,14 +156,13 @@ export class JuegoDeGeocachingPage implements OnInit {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(this.map);
     window.dispatchEvent(new Event('resize'));
-    navigator.geolocation.getCurrentPosition(position => {
-      this.lat = position.coords.latitude;
-      this.lng = position.coords.longitude;
-    });
-    window.setTimeout(function() {
-      console.log(this.lat);
-      new L.Marker([this.lat, this.lng]).addTo(this.map)
-    },1000);
+    // window.setTimeout(function() {
+    //   new L.Marker([this.lat, this.lng]).addTo(this.map)
+    // },1000);
+  }
+  setLocation(): void {
+    new L.Marker([this.lat, this.lng]).addTo(this.map);
+    this.map.panTo(new L.LatLng(this.lat,this.lng));
   }
   empezamos() {
     this.empezado = true;
