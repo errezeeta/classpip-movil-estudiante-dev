@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { MatStepper } from '@angular/material';
 import { Socket } from 'ngx-socket-io';
 import * as L from 'leaflet';
+import { JuegoDeGeocachingPageModule } from './juego-de-geocaching.module';
 
 @Component({
   selector: 'app-juego-de-geocaching',
@@ -19,6 +20,7 @@ export class JuegoDeGeocachingPage implements OnInit {
   @ViewChild('stepper', {static: false}) stepper: MatStepper;
 
   empezado: boolean = false;
+  muestraInfo: boolean = true;
   rendirse: boolean = false;
   alertaproximidad: boolean = false;
   ubicacion: boolean = false;
@@ -213,6 +215,8 @@ PreguntaBasica(){
       this.RespuestaIncorrecta();
     }
 }
+
+
 PreguntaBonus(){
   if (this.RespuestaEscogidaBonus === this.preguntabonus.RespuestaCorrecta) {
     console.log('paso por bonus y la acierto');
@@ -298,7 +302,19 @@ siguiente(){
 finalizar(){
   this.route.navigateByUrl('tabs/inici');
 }
-
+display () {
+  if (this.muestraInfo==true) {
+    document.getElementById("map").style.display = "block";
+    this.map.invalidateSize();
+    document.getElementById("info").style.display = "none";
+    this.muestraInfo = false; 
+  }
+  else {
+    document.getElementById("map").style.display = "none";
+    document.getElementById("info").style.display = "block";
+    this.muestraInfo = true;
+  }
+}
 mover(a: number){
   this.stepper.selectedIndex = a;
 }

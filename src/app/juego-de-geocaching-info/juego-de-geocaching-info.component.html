@@ -1,0 +1,42 @@
+<p>
+  juego-de-geocaching-info works! {{puntuacionCorrecta}}
+</p>
+
+<mat-horizontal-stepper linear id="stepper">
+  
+  <!-- <ng-template matStepperIcon="done" let-index="index">
+      {{index + 10}}
+  </ng-template>
+	 -->
+
+    <ng-template matStepperIcon="edit">
+    <mat-icon>insert_drive_file</mat-icon>
+  </ng-template>
+
+  <ng-template matStepperIcon="done">
+    <mat-icon>done_all</mat-icon>
+  </ng-template>
+
+  <mat-step label="Step 1">
+		<h1> Información </h1>
+    <h4> En el juego de geocaching deberás encontrar uno o varios lugares indicados por el profesor, dispondrás de una pista para encontrar la ubicación. Puedes activar una pista extra para encontrar la ubicación si tienes dificultades (puede ser que el uso de pistas extra haga que recibas menos puntuación). Cuando llegues a un punto, se mostrará una pregunta que te recompensara con puntuación si la aciertas, el profesor puede haber activado preguntas extra para el mismo punto que te otorgarán mas puntos (cuidado, fallar preguntas puede restar puntuación).</h4>
+		<button mat-button (click)="next()" mat-raised-button color="primary"> Siguiente </button>
+	</mat-step>
+
+	<mat-step #step2 label="Step 2">
+		<h1> Puntuaciones  </h1>
+    <h4><b>Descripción: </b>{{descripcion}}</h4>
+    <h4><b>Puntuación por respuesta correcta: </b> {{puntuacionCorrecta}}</h4>
+    <h4><b>Penalización por respuesta incorrecta: </b> {{puntuacionIncorrecta}}</h4>
+    <h4><b>Porcentaje a aumentar por respuesta bonus correcta: </b> {{puntuacionCorrectaBonus}}</h4>
+    <h4><b>Porcentaje de penalización por respuesta bonus incorrecta: </b> {{puntuacionIncorrectaBonus}}</h4>
+		<button mat-button (click)="next()" mat-raised-button color="primary">Siguiente</button>
+    <button mat-button (click)="back()" mat-raised-button color="primary">Atras</button>
+
+	</mat-step>
+	<mat-step #step3 label="Step 3">
+		<h1> Ayuda </h1>
+    <h4> ----Muestra ayuda de la interfaz---- </h4>
+    <button mat-button (click)="back()" mat-raised-button color="primary">Atrás</button>
+	</mat-step>
+</mat-horizontal-stepper>
