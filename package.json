@@ -5,7 +5,7 @@
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
-    "start": "ionic serve --external -- --proxy-config proxy.conf.json && export NODE_OPTIONS=--openssl-legacy-provider",
+    "start": "export NODE_OPTIONS=--openssl-legacy-provider && ionic serve --external -- --proxy-config proxy.conf.json ",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -65,6 +65,8 @@
     "ionic-long-press": "^2.0.3",
     "ionic-native": "^2.9.0",
     "leaflet": "^1.9.3",
+    "leaflet-easybutton": "^2.4.0",
+    "leaflet-info-control": "^0.3.0",
     "ngx-socket-io": "^3.2.0",
     "npm": "^6.14.11",
     "rxjs": "^6.6.3",
@@ -84,10 +86,10 @@
     "@angular/language-service": "~8.1.2",
     "@ionic/angular-toolkit": "~2.0.0",
     "@ionic/lab": "2.0.13",
+    "@types/geojson": "7946.0.8",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
-    "@types/geojson": "7946.0.8",
     "codelyzer": "^5.2.2",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
@@ -134,7 +136,8 @@
       "cordova-plugin-network-information": {}
     },
     "resolutions": {
-      "@types/geojson": "7946.0.8"},
+      "@types/geojson": "7946.0.8"
+    },
     "platforms": [
       "browser",
       "ios",

@@ -18,6 +18,7 @@
     width: 100%;
     margin: auto;
     border: 2px solid black;
+    z-index: 0;
   }
 .button-empezar {
     background-color: rgb(7, 214, 93);
@@ -55,6 +56,14 @@
     bottom: 35px;
     left: 25px; */
     margin-top: 175px; 
+}
+#butInfo {
+    top: 100px;
+    position: absolute;
+    z-index: 50;
+    left: 25px;
+    border-radius: 30px;
+    scale: 3;
 }
 
 .button-rendirse {

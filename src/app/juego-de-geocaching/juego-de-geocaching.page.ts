@@ -9,7 +9,6 @@ import Swal from 'sweetalert2';
 import { MatStepper } from '@angular/material';
 import { Socket } from 'ngx-socket-io';
 import * as L from 'leaflet';
-import { JuegoDeGeocachingPageModule } from './juego-de-geocaching.module';
 
 @Component({
   selector: 'app-juego-de-geocaching',
@@ -90,7 +89,8 @@ export class JuegoDeGeocachingPage implements OnInit {
     private peticionesAPI: PeticionesAPIService,
     private calculos: CalculosService,
     private alertCtrl: AlertController,
-    private platform: Platform
+    private platform: Platform,
+    public alertController: AlertController
     // private servidor: Socket
   ) { }
 
@@ -158,13 +158,14 @@ export class JuegoDeGeocachingPage implements OnInit {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(this.map);
     window.dispatchEvent(new Event('resize'));
-    // window.setTimeout(function() {
-    //   new L.Marker([this.lat, this.lng]).addTo(this.map)
-    // },1000);
+
+    
+
   }
   setLocation(): void {
     new L.Marker([this.lat, this.lng]).addTo(this.map);
     this.map.panTo(new L.LatLng(this.lat,this.lng));
+
   }
   empezamos() {
     this.empezado = true;
@@ -306,11 +307,13 @@ display () {
   if (this.muestraInfo==true) {
     document.getElementById("map").style.display = "block";
     this.map.invalidateSize();
+    document.getElementById("butInfo").style.display = "block";
     document.getElementById("info").style.display = "none";
     this.muestraInfo = false; 
   }
   else {
     document.getElementById("map").style.display = "none";
+    document.getElementById("butInfo").style.display = "none";
     document.getElementById("info").style.display = "block";
     this.muestraInfo = true;
   }
@@ -396,6 +399,17 @@ async caliente() {
     ]
   });
   await confirm.present();
+}
+
+async sacaDialogo() {
+	const alert = await this.alertController.create({
+	  header: "Alert",
+	  subHeader: "Subtitle",
+	  message: "This is an alert message.",
+	  buttons: ["OK"],
+	});
+
+	await alert.present();
 }
 
 async llegada() {
@@ -511,3 +525,5 @@ async RespuestaIncorrectaBonus() {
 }
 
 }
+
+

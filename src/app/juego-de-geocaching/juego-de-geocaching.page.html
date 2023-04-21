@@ -14,6 +14,12 @@
 <ion-content *ngIf = "juegoSeleccionado.JuegoActivo">
   <app-juego-de-geocaching-info style="display: block" id="info"></app-juego-de-geocaching-info>
   <div style="display: none" id="map"></div>
+  <ion-button style="display: none" id="butInfo" > i </ion-button>
+  <ion-popover trigger="butInfo" triggerAction="context-menu">
+    <ng-template>
+      <ion-content class="ion-padding">Hello World!</ion-content>
+    </ng-template>
+  </ion-popover>
   <button mat-button (click)="display()" mat-raised-button color="primary">Oculta info</button>
 </ion-content>
 
