@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { SesionService, PeticionesAPIService } from '../servicios';
 import { NavController, AlertController, Platform } from '@ionic/angular';
 import { CalculosService } from '../servicios/calculos.service';
@@ -25,6 +25,7 @@ export class JuegoDeGeocachingPage implements OnInit {
   respuesta: boolean = false;
   bonus: boolean = false;
   respuestabonus: boolean = false;
+  tablaJugadores: boolean = false;
 
 
 
@@ -47,6 +48,7 @@ export class JuegoDeGeocachingPage implements OnInit {
   preguntabonus: Pregunta;
 
   MisAlumnosDelJuegoDeGeocaching: MiAlumnoAMostrarJuegoDeGeocaching[];
+  alumnosTabla: MiAlumnoAMostrarJuegoDeGeocaching[];
   
 
   puntuaciontotal: number = 0;
@@ -72,6 +74,7 @@ export class JuegoDeGeocachingPage implements OnInit {
   RespuestaEscogidaBonus: string;
   Nota: number = 0;
   PuntuacionInicial: string = '';
+  ranking: number;
  
   //definimos la posición de la respuesta correcta en cada pregunta basica y bonus
 
@@ -86,7 +89,8 @@ export class JuegoDeGeocachingPage implements OnInit {
     private peticionesAPI: PeticionesAPIService,
     private calculos: CalculosService,
     private alertCtrl: AlertController,
-    private platform: Platform
+    private platform: Platform,
+    private cd: ChangeDetectorRef
     // private servidor: Socket
   ) { }
 
@@ -133,6 +137,11 @@ export class JuegoDeGeocachingPage implements OnInit {
         this.MisAlumnosDelJuegoDeGeocaching = this.calculos.DameListaAlumnosJuegoGeocachingOrdenada(this.juegoSeleccionado.id);
       }
       // this.servidor.connect();
+
+      setInterval(() => {
+        this.updateRanking();
+        
+      }, 60000); 
  
   }
   
@@ -159,7 +168,38 @@ export class JuegoDeGeocachingPage implements OnInit {
       }
     }, null, this.options);
 
-}
+
+
+ 
+  }
+
+  updateRanking(){
+    
+    this.calculos.PosicionAlumnoJuegoDeGeocaching(this.juegoSeleccionado.id, this.alumnoId).subscribe(
+      res => {
+        this.ranking = res;
+      },
+      error => {
+        console.error(error);
+      }
+    );
+    console.log(this.ranking);
+    this.cd.markForCheck();
+    
+  }
+
+  RankingClick(): void {
+
+    this.tablaJugadores = true;
+    this.calculos.ListaParaRankingGeocaching(this.juegoSeleccionado.id).subscribe(
+      alumnosTabla => {
+        this.alumnosTabla = alumnosTabla;
+      
+      }
+    );
+
+ 
+  }
 
 
 calculateDistance(lon1, lon2, lat1, lat2){

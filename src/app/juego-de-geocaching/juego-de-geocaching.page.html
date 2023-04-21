@@ -11,10 +11,91 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf = "juegoSeleccionado.JuegoActivo">
-    <mat-horizontal-stepper #stepper style="width:100%;" *ngIf="PuntuacionInicial === '0'">
+<button (click)="empezamos()">Empieza</button>
 
-      <!-- PRIMER PASO -->
+<ion-content *ngIf = "empezado && juegoSeleccionado.JuegoActivo">
+
+  <div>
+
+    
+    <ion-card *ngIf="rendirse;else Aviso_rendirse" >
+      <ion-card-content>
+      <h4 style = "text-align: center;">Pista fácil </h4> 
+      <h2 style = "text-align: center; color:rgb(172, 26, 26)">{{puntogeolocalizable.PistaFacil}} </h2>
+      <br>
+      <br>
+      <h4 style = "text-align: center;">Distancia a tu destino </h4>
+      <h1 style = "text-align: center; color: rgb(172, 26, 26)">{{distancia}} metros </h1>
+      </ion-card-content> 
+    </ion-card>
+    
+  
+    <ng-template #Aviso_rendirse>
+    
+      <ion-card (click)="Rendirse()">
+        <ion-card-content>
+          <h4 style = "text-align: center;">Pista difícil </h4> 
+          <h2 style = "text-align: center; color: rgb(172, 26, 26)">{{puntogeolocalizable.PistaDificil}} </h2>
+        </ion-card-content>
+      </ion-card>
+
+    </ng-template>
+
+    <div *ngIf="ubicacion">
+      <p><b style="font-size: 16px;">Avanza para responder la pregunta puntuable</b></p>
+      <button class = "ion-float-right button-empezar" matStepperNext>Responder Pregunta</button>
+    </div>
+
+
+     <!-- <button (click) = "Rendirse()" class = "ion-float-right button-rendirse">Rendirse</button> -->
+
+  </div>
+
+  
+  
+  <fieldset>
+    <legend>Top:</legend>
+    {{ranking}}
+  </fieldset>
+
+  <button (click)="RankingClick()" class = "ion-float-right button">Ver ranking</button>
+
+
+  <table *ngIf="tablaJugadores">
+      <thead>
+          <tr>
+              <th>Nombre Jugador</th>
+              <th>Puntuación</th>
+              <th>Etapa</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let alumno of alumnosTabla">
+              
+              <td>{{ alumno.Nombre }}</td>
+              <td>{{ alumno.Puntuacion }}</td>
+              <td>{{ alumno.Etapa }}</td>
+          </tr>
+      </tbody>
+
+
+  </table>
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+    <!-- <mat-horizontal-stepper #stepper style="width:100%;" *ngIf="PuntuacionInicial === '0'">
+
+      <!-- PRIMER PASO 
       <mat-step>
         <p style="margin-top: 50px; text-align: justify;">Descripción: Al empezar cada etapa, aparecerá una pista que te guiará a una ubicación dónde se realizará una pregunta puntuable. ¿Estas seguro de que quieres jugar ahora? Si es que sí, avanza para ver las reglas.</p>
         <div style="margin-top: auto;">
@@ -22,7 +103,7 @@
         </div>
       </mat-step>
 
-      <!-- SEGUNDO PASO -->
+      <!-- SEGUNDO PASO 
       <mat-step>
         <div style="margin-top: 50px;">
           <p><b>Descripción: </b>{{descripcion}}</p>
@@ -34,7 +115,7 @@
         </div>
       </mat-step>
       
-       <!-- TERCER PASO -->
+       <!-- TERCER PASO 
       <mat-step>
         <div *ngIf="rendirse;else Aviso_rendirse">
 
@@ -66,7 +147,7 @@
         </div>
       </mat-step>
 
-        <!-- CUARTO PASO -->
+        <!-- CUARTO PASO 
       <mat-step *ngIf="ubicacion">
         <p style="font-size: 18px;">{{preguntabasica.Pregunta}}</p>
         <div>
@@ -80,7 +161,7 @@
       </mat-step>  
 
 
-       <!-- QUINTO PASO -->
+       <!-- QUINTO PASO 
         <mat-step *ngIf="ubicacion && respuesta && bonus">
            <p style="font-size: 18px;"><b>Bonus: </b>{{preguntabonus.Pregunta}}</p>
              <mat-radio-group aria-labelledby="example-radio-group-label" class="radio-group" [(ngModel)]="RespuestaEscogidaBonus">
@@ -92,7 +173,7 @@
         </mat-step>
 
         
-         <!-- SEXTO PASO -->
+         <!-- SEXTO PASO 
         <mat-step>
           <p style="font-size: 18px;"><b>Puntuación Etapa: {{Nota}}  </b></p>
           <p style="font-size: 18px;"><b>Puntuación Total: {{puntuaciontotal}}  </b></p>
@@ -117,7 +198,7 @@
           <p style="font-size: 16px;">Ya has realizado este juego previamente. Y la puntuación obtenida es: <b>{{PuntuacionInicial}}</b></p>
         </div>
       </mat-step>
-    </mat-horizontal-stepper>
+    </mat-horizontal-stepper> -->
 
 </ion-content>
 
