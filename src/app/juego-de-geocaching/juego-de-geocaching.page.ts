@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SesionService, PeticionesAPIService } from '../servicios';
-import { NavController, AlertController, Platform } from '@ionic/angular';
+import { NavController, AlertController, Platform, PopoverController } from '@ionic/angular';
 import { CalculosService } from '../servicios/calculos.service';
 import { Juego, AlumnoJuegoDeGeocaching, Escenario, PuntoGeolocalizable, MiAlumnoAMostrarJuegoDeGeocaching } from '../clases';
 import { Pregunta } from '../clases/Pregunta';
@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { MatStepper } from '@angular/material';
 import { Socket } from 'ngx-socket-io';
 import * as L from 'leaflet';
+import { JuegoDeGeocachingInfoComponent } from '../juego-de-geocaching-info/juego-de-geocaching-info.component';
 
 @Component({
   selector: 'app-juego-de-geocaching',
@@ -42,6 +43,7 @@ export class JuegoDeGeocachingPage implements OnInit {
   puntuacionIncorrectaBonus: number;
   preguntasBasicas: Pregunta[];
   idpreguntasBasicas: number[];
+
   preguntasBonus: Pregunta[];
   idpreguntasBonus: number[];
   puntogeolocalizable: PuntoGeolocalizable;
@@ -75,12 +77,21 @@ export class JuegoDeGeocachingPage implements OnInit {
   RespuestaEscogidaBonus: string;
   Nota: number = 0;
   PuntuacionInicial: string = '';
+  iconoPosicion = L.icon({
+    iconUrl: '../../assets/marker.png',
+
+    iconSize:     [40, 45], // tamaño del marcador de la ubicacion
+    iconAnchor:   [22, 45], // point of the icon which will correspond to marker's location
+    shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
  
   //definimos la posición de la respuesta correcta en cada pregunta basica y bonus
 
   ordenRespuestaCorrectaBasicas: number[] = [3, 1, 1, 0, 2, 0, 3, 3, 2, 0, 2, 1, 1,0 , 3, 2, 0, 0, 1, 3];
   ordenRespuestaCorrectaBonus: number[] = [2, 3, 3, 1, 0, 0, 2, 1, 1, 3, 2, 0, 2, 3, 2, 2, 1, 3, 0, 1, 2];
   map: L.Map;
+  layerUbicacion: L.LayerGroup<any>;
  
   constructor(
     private sesion: SesionService,
@@ -90,11 +101,13 @@ export class JuegoDeGeocachingPage implements OnInit {
     private calculos: CalculosService,
     private alertCtrl: AlertController,
     private platform: Platform,
-    public alertController: AlertController
+    public alertController: AlertController,
+    private popCtrl: PopoverController,
     // private servidor: Socket
   ) { }
 
   ngOnInit() {
+    // this.puntogeolocalizable.PistaDificil=" "
     this.alumnoId = this.sesion.DameAlumno().id;
     this.juegoSeleccionado = this.sesion.DameJuego();
     this.puntuacionCorrecta = this.juegoSeleccionado.PuntuacionCorrecta;
@@ -103,12 +116,15 @@ export class JuegoDeGeocachingPage implements OnInit {
     this.puntuacionIncorrectaBonus = this.juegoSeleccionado.PuntuacionIncorrectaBonus;
     this.idpreguntasBasicas = this.juegoSeleccionado.PreguntasBasicas;
     this.idpreguntasBonus = this.juegoSeleccionado.PreguntasBonus;
+    
      
-    navigator.geolocation.getCurrentPosition(position => {
-      this.lat = position.coords.latitude;
-      this.lng = position.coords.longitude;
-      this.setLocation();
-    });
+    setInterval(()=> {
+      navigator.geolocation.getCurrentPosition(position => {
+        this.lat = position.coords.latitude;
+        this.lng = position.coords.longitude;
+        this.setLocation();
+      });
+    },5000)
 
     this.peticionesAPI.DameInscripcionAlumnoJuegoDeGeocaching(this.alumnoId, this.juegoSeleccionado.id)
     .subscribe (res => {
@@ -159,14 +175,33 @@ export class JuegoDeGeocachingPage implements OnInit {
     }).addTo(this.map);
     window.dispatchEvent(new Event('resize'));
 
-    
-
+    this.layerUbicacion = L.layerGroup().addTo(this.map);
   }
+  // icono = L.icon ({
+  //   iconUrl: './marker-icon.png',
+  //   shadowUrl: './marker-shadow.png',
+  //   iconSize:     [38, 95], // size of the icon
+  //   shadowSize:   [50, 64], // size of the shadow
+  //   iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+  //   shadowAnchor: [4, 62],  // the same for the shadow
+  //   popupAnchor:  [-3, -76]
+  // });
+
   setLocation(): void {
-    new L.Marker([this.lat, this.lng]).addTo(this.map);
+    this.layerUbicacion.clearLayers();
+    new L.Marker([this.lat, this.lng], {icon: this.iconoPosicion}).addTo(this.layerUbicacion);
     this.map.panTo(new L.LatLng(this.lat,this.lng));
-
+    this.distancia = Math.trunc(this.calculateDistance(this.lng, Number(this.puntogeolocalizable.Longitud), this.lat, Number(this.puntogeolocalizable.Latitud)));
+    
+    if (this.distancia <= 35 && this.alertaproximidad === false) {
+      this.caliente();
+    }
+    if (this.distancia <= 5 && this.ubicacion === false) {}
+    else {
+      this.frio();
+    }
   }
+
   empezamos() {
     this.empezado = true;
 
@@ -188,7 +223,9 @@ export class JuegoDeGeocachingPage implements OnInit {
       if (this.distancia <= 5 && this.ubicacion === false) {
         this.llegada();
       }
+      console.log(`Ahora mismo estas en ${this.lat} y ${this.lng} y estas a una distancia de ${this.distancia} del punto ${this.puntogeolocalizable.Latitud}, ${this.puntogeolocalizable.Longitud}`)
     }, null, this.options);
+    
 
 }
 
@@ -217,7 +254,14 @@ PreguntaBasica(){
     }
 }
 
+async popoverEvent() {
+  const popover = await this.popCtrl.create({
+    component: JuegoDeGeocachingInfoComponent,
+    cssClass: 'contact-popover'
+  })
 
+  return await popover.present();
+}
 PreguntaBonus(){
   if (this.RespuestaEscogidaBonus === this.preguntabonus.RespuestaCorrecta) {
     console.log('paso por bonus y la acierto');
@@ -305,15 +349,15 @@ finalizar(){
 }
 display () {
   if (this.muestraInfo==true) {
-    document.getElementById("map").style.display = "block";
+    document.getElementById("juego").style.display = "block";
     this.map.invalidateSize();
-    document.getElementById("butInfo").style.display = "block";
+    document.getElementById("botonInformacion").style.display = "none";
     document.getElementById("info").style.display = "none";
-    this.muestraInfo = false; 
+    this.muestraInfo = false;
+    this.empezamos();
   }
   else {
-    document.getElementById("map").style.display = "none";
-    document.getElementById("butInfo").style.display = "none";
+    document.getElementById("juego").style.display = "none";
     document.getElementById("info").style.display = "block";
     this.muestraInfo = true;
   }
@@ -398,7 +442,13 @@ async caliente() {
       }
     ]
   });
+  document.getElementById("contestar").classList.remove("lejos");
+  document.getElementById("contestar").classList.add("medio");
   await confirm.present();
+}
+async frio() {
+  document.getElementById("contestar").classList.remove("medio");
+  document.getElementById("contestar").classList.add("lejos");
 }
 
 async sacaDialogo() {

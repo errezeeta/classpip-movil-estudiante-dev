@@ -13,14 +13,18 @@
 
 <ion-content *ngIf = "juegoSeleccionado.JuegoActivo">
   <app-juego-de-geocaching-info style="display: block" id="info"></app-juego-de-geocaching-info>
-  <div style="display: none" id="map"></div>
-  <ion-button style="display: none" id="butInfo" > i </ion-button>
-  <ion-popover trigger="butInfo" triggerAction="context-menu">
-    <ng-template>
-      <ion-content class="ion-padding">Hello World!</ion-content>
-    </ng-template>
-  </ion-popover>
-  <button mat-button (click)="display()" mat-raised-button color="primary">Oculta info</button>
+  <ion-content style="display: none" id="juego">
+    <div id="map"></div>
+    <ion-button id="butInfo" (click)="popoverEvent()" > i </ion-button>
+    <ion-button id="ranking"> Ver ranking </ion-button> <ion-button id="contestar" class="lejos"> Responder pregunta</ion-button>
+    <!--<ion-card id="pistaDificil">
+       <ion-card-content>
+        <h4 style = "text-align: center;">Pista difícil </h4> 
+        <h2 style = "text-align: center; color: rgb(172, 26, 26)">{{puntogeolocalizable.PistaDificil}} </h2>
+      </ion-card-content>
+    </ion-card> -->
+  </ion-content>
+  <button id="botonInformacion" mat-button (click)="display()" mat-raised-button color="primary">Oculta info</button>
 </ion-content>
 
 

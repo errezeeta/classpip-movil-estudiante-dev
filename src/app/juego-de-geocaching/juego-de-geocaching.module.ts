@@ -30,6 +30,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
+  entryComponents: [JuegoDeGeocachingInfoComponent],
   declarations: [JuegoDeGeocachingPage, JuegoDeGeocachingInfoComponent]
 })
 export class JuegoDeGeocachingPageModule {}

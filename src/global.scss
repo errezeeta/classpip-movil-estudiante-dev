@@ -75,6 +75,9 @@ USUARIO 3 POSIBLES PLANTILLAS ENTRE LAS QUE ESCOGER */
   height: 45px;
   top: 25px
 }
+.sc-ion-popover-md-h{
+  --width: 80%!important;
+}
 /* BOTONES GENERALES */
 .ranking-btn {
   margin-bottom: 10%; // Margin to some element put below
@@ -1385,6 +1388,7 @@ ion-tab-bar, ion-tab-button{
       height: 60px;
     }
   }
+
   .elementos-complemento {
     margin-top: 5px;
     margin-right: 10px;

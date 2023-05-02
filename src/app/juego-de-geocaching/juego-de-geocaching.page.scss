@@ -58,12 +58,13 @@
     margin-top: 175px; 
 }
 #butInfo {
-    top: 100px;
+    top: 88px;
     position: absolute;
-    z-index: 50;
-    left: 25px;
-    border-radius: 30px;
-    scale: 3;
+    z-index: 1;
+    left: 11px;
+    --ion-color-primary: #354f7b;
+    --border-radius: 50px;
+    scale: 1;
 }
 
 .button-rendirse {
@@ -73,4 +74,49 @@
     padding: 20px;
     border-radius: 20px;
     margin-top: 175px; 
+}
+.contact-popover{
+    --width: 500px!important;
+}
+#ranking {
+    top: 472px;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    --ion-color-primary: #354f7b;
+    --border-radius: 10px;
+    scale: 1;
+    width: 45%;
+    height: 10%;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+}
+#contestar {
+
+}
+.lejos{
+    top: 472px;
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    --ion-color-primary: #45484e;
+    --border-radius: 10px;
+    scale: 1;
+    width: 45%;
+    height: 10%;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+}
+.medio {
+    top: 472px;
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    --ion-color-primary: #e2860d;
+    --border-radius: 10px;
+    scale: 1;
+    width: 45%;
+    height: 10%;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
 }
