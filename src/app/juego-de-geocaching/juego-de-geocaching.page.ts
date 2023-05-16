@@ -81,7 +81,7 @@ export class JuegoDeGeocachingPage implements OnInit {
     iconUrl: '../../assets/marker.png',
 
     iconSize:     [40, 45], // tamaño del marcador de la ubicacion
-    iconAnchor:   [22, 45], // point of the icon which will correspond to marker's location
+    iconAnchor:   [10, 45], // point of the icon which will correspond to marker's location
     shadowAnchor: [4, 62],  // the same for the shadow
     popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 });
@@ -117,11 +117,14 @@ export class JuegoDeGeocachingPage implements OnInit {
     this.idpreguntasBasicas = this.juegoSeleccionado.PreguntasBasicas;
     this.idpreguntasBonus = this.juegoSeleccionado.PreguntasBonus;
     
-     
+    console.log(`estas en el geocaching`)
     setInterval(()=> {
+      console.log("estas dentro del interval")
       navigator.geolocation.getCurrentPosition(position => {
+        console.log("entro en el getcurrentposition")
         this.lat = position.coords.latitude;
         this.lng = position.coords.longitude;
+        console.log(`Estas en ${this.lat}, ${this.lng}`);
         this.setLocation();
       });
     },5000)
@@ -177,22 +180,13 @@ export class JuegoDeGeocachingPage implements OnInit {
 
     this.layerUbicacion = L.layerGroup().addTo(this.map);
   }
-  // icono = L.icon ({
-  //   iconUrl: './marker-icon.png',
-  //   shadowUrl: './marker-shadow.png',
-  //   iconSize:     [38, 95], // size of the icon
-  //   shadowSize:   [50, 64], // size of the shadow
-  //   iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-  //   shadowAnchor: [4, 62],  // the same for the shadow
-  //   popupAnchor:  [-3, -76]
-  // });
 
   setLocation(): void {
     this.layerUbicacion.clearLayers();
     new L.Marker([this.lat, this.lng], {icon: this.iconoPosicion}).addTo(this.layerUbicacion);
     this.map.panTo(new L.LatLng(this.lat,this.lng));
     this.distancia = Math.trunc(this.calculateDistance(this.lng, Number(this.puntogeolocalizable.Longitud), this.lat, Number(this.puntogeolocalizable.Latitud)));
-    
+    console.log(`Estoy en latitud: ${this.lat} y longitud ${this.lng}, el punto que buscas esta en latitud: ${this.puntogeolocalizable.Latitud} y en longitud ${this.puntogeolocalizable.Longitud}, por lo que estas a ${this.distancia}`)
     if (this.distancia <= 35 && this.alertaproximidad === false) {
       this.caliente();
     }
@@ -202,32 +196,32 @@ export class JuegoDeGeocachingPage implements OnInit {
     }
   }
 
-  empezamos() {
-    this.empezado = true;
+//   empezamos() {
+//     this.empezado = true;
 
-    this.identificador = navigator.geolocation.watchPosition((position) => {
-      const lat =  position.coords.latitude;
-      const lon =  position.coords.longitude;
-      console.log('latitud ' + lat);
-      console.log('longitud ' + lon );
+//     this.identificador = navigator.geolocation.watchPosition((position) => {
+//       const lat =  position.coords.latitude;
+//       const lon =  position.coords.longitude;
+//       console.log('latitud ' + lat);
+//       console.log('longitud ' + lon );
 
-      // tslint:disable-next-line:max-line-length
-      this.distancia = Math.trunc(this.calculateDistance(lon, Number(this.puntogeolocalizable.Longitud), lat, Number(this.puntogeolocalizable.Latitud)));
-      // tslint:disable-next-line:max-line-length
+//       // tslint:disable-next-line:max-line-length
+//       this.distancia = Math.trunc(this.calculateDistance(lon, Number(this.puntogeolocalizable.Longitud), lat, Number(this.puntogeolocalizable.Latitud)));
+//       // tslint:disable-next-line:max-line-length
    
 
 
-      if (this.distancia <= 25 && this.alertaproximidad === false) {
-        this.caliente();
-      }
-      if (this.distancia <= 5 && this.ubicacion === false) {
-        this.llegada();
-      }
-      console.log(`Ahora mismo estas en ${this.lat} y ${this.lng} y estas a una distancia de ${this.distancia} del punto ${this.puntogeolocalizable.Latitud}, ${this.puntogeolocalizable.Longitud}`)
-    }, null, this.options);
+//       if (this.distancia <= 25 && this.alertaproximidad === false) {
+//         this.caliente();
+//       }
+//       if (this.distancia <= 5 && this.ubicacion === false) {
+//         this.llegada();
+//       }
+//       console.log(`Ahora mismo estas en ${this.lat} y ${this.lng} y estas a una distancia de ${this.distancia} del punto ${this.puntogeolocalizable.Latitud}, ${this.puntogeolocalizable.Longitud}`)
+//     }, null, this.options);
     
 
-}
+// }
 
 
 calculateDistance(lon1, lon2, lat1, lat2){
@@ -323,26 +317,26 @@ Puntuacion(){
     });
 }
 
-siguiente(){
-  //reset de todas las variables
-  this.rendirse=false;
-  this.distancia=1000;
-  this.alertaproximidad=false;
-  this.ubicacion=false;
-  this.respuestasPosiblesBasicas=[];
-  this.respuestasPosiblesBonus=[];
-  this.respuesta=false;
-  this.bonus=false;
-  this.respuestabonus=false;
-  this.Nota=0;
-  this.index=this.index + 1;
-  this.puntogeolocalizable=this.puntosgeolocalizables[this.index];
-  this.preguntabasica=this.preguntasBasicas[this.index];
-  this.preguntabonus=this.preguntasBonus[this.index];
-  this.mover(2); //volvemos al TERCER PASO
-  this.empezamos();
-  // this.servidor.emit('etapaJuegoDeGeocaching', { id: this.alumnoId, puntuacion: this.puntuaciontotal, etapa: this.index});
-}
+// siguiente(){
+//   //reset de todas las variables
+//   this.rendirse=false;
+//   this.distancia=1000;
+//   this.alertaproximidad=false;
+//   this.ubicacion=false;
+//   this.respuestasPosiblesBasicas=[];
+//   this.respuestasPosiblesBonus=[];
+//   this.respuesta=false;
+//   this.bonus=false;
+//   this.respuestabonus=false;
+//   this.Nota=0;
+//   this.index=this.index + 1;
+//   this.puntogeolocalizable=this.puntosgeolocalizables[this.index];
+//   this.preguntabasica=this.preguntasBasicas[this.index];
+//   this.preguntabonus=this.preguntasBonus[this.index];
+//   this.mover(2); //volvemos al TERCER PASO
+//   this.empezamos();
+//   // this.servidor.emit('etapaJuegoDeGeocaching', { id: this.alumnoId, puntuacion: this.puntuaciontotal, etapa: this.index});
+// }
 
 finalizar(){
   this.route.navigateByUrl('tabs/inici');
@@ -354,7 +348,7 @@ display () {
     document.getElementById("botonInformacion").style.display = "none";
     document.getElementById("info").style.display = "none";
     this.muestraInfo = false;
-    this.empezamos();
+    // this.empezamos();
   }
   else {
     document.getElementById("juego").style.display = "none";
