@@ -4,7 +4,7 @@ import { NavController, AlertController, Platform } from '@ionic/angular';
 import { Juego, AlumnoJuegoDeGeocaching, Escenario, PuntoGeolocalizable, Pregunta } from '../clases';
 
 import { CalculosService } from '../servicios/calculos.service';
-import { MatHorizontalStepper } from '@angular/material';
+import { MatHorizontalStepper } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-juego-de-geocaching-info',

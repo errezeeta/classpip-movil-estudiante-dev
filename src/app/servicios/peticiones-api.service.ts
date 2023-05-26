@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ResponseContentType, Http} from '@angular/http';
 import {
   Profesor, Grupo, Alumno, Matricula, Juego, Punto, Nivel, AlumnoJuegoDePuntos,
   Equipo, AsignacionEquipo, AsignacionPuntosJuego, EquipoJuegoDePuntos, Coleccion,
@@ -132,12 +131,12 @@ export class PeticionesAPIService {
 
   constructor(
     private http: HttpClient,
-    private httpImagenes: Http
+    private httpImagenes: HttpClient
   ) { }
 
   public DameImagenColeccion(imagen: string): Observable<any> {
     return this.httpImagenes.get(this.APIUrlImagenColeccion + '/download/' + imagen,
-      { responseType: ResponseContentType.Blob });
+      { responseType: 'blob' });
   }
 
 
@@ -226,7 +225,7 @@ export class PeticionesAPIService {
   // Obtenemos la imagen del nivel deseado
   public DameImagenNivel(imagen: string): Observable<any> {
     return this.httpImagenes.get(this.APIUrlImagenNivel + '/download/' + imagen,
-        { responseType: ResponseContentType.Blob });
+        { responseType: 'blob' });
   }
 
   // Devuelve los juego de colecciones del Alumno
@@ -961,7 +960,7 @@ public DameJuegoDeCompeticionTorneoEquipo(equipoId: number): Observable<Juego[]>
   /* Dame las imagenes de los cromos */
   public DameImagenCromo(imagen: string): Observable<any> {
     return this.httpImagenes.get(this.APIUrlImagenCromo +  '/download/' + imagen,
-      { responseType: ResponseContentType.Blob });
+      { responseType: 'blob'});
   }
 
 //geocaching
@@ -1026,7 +1025,7 @@ public PonerNotaAlumnoJuegoDeGeocaching(alumnoJuegoDeGeocaching: AlumnoJuegoDeGe
 
   public DameImagenAvatar(imagen: string): Observable<any> {
     return this.httpImagenes.get(this.APIUrlImagenesAvatares + '/download/' + imagen,
-      { responseType: ResponseContentType.Blob });
+      { responseType: 'blob' });
   }
 
    // PONE AUDIO DE AVATAR
