@@ -58,13 +58,23 @@
     margin-top: 175px; 
 }
 #butInfo {
-    top: 88px;
+    top: 110px;
     position: absolute;
     z-index: 1;
     left: 11px;
     --ion-color-primary: #354f7b;
     --border-radius: 50px;
     scale: 1;
+}
+.tarjetaPista {
+    top: 0;
+    position: absolute;
+    z-index: 1;
+    left: 11px;
+    scale: 1;
+    width: 97%;
+    margin: 10px!important;
+    height: 17%;
 }
 
 .button-rendirse {
@@ -119,4 +129,9 @@
     height: 10%;
     margin-left: 2.5%;
     margin-right: 2.5%;
+}
+
+.child {
+    width: 50%;
+    float: left;
 }

@@ -51,6 +51,8 @@ export class JuegoDeGeocachingInfoComponent implements OnInit {
     this.idpreguntasBasicas = this.juegoSeleccionado.PreguntasBasicas;
     this.idpreguntasBonus = this.juegoSeleccionado.PreguntasBonus;
 
+    
+
   }
   @ViewChild(MatHorizontalStepper, {static: false}) stepper: MatHorizontalStepper;
   step1Completed = false;

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { SesionService, PeticionesAPIService } from '../servicios';
 import { NavController, AlertController, Platform, PopoverController } from '@ionic/angular';
 import { CalculosService } from '../servicios/calculos.service';
@@ -10,6 +10,7 @@ import { MatStepper } from '@angular/material/stepper';
 import { Socket } from 'ngx-socket-io';
 import * as L from 'leaflet';
 import { JuegoDeGeocachingInfoComponent } from '../juego-de-geocaching-info/juego-de-geocaching-info.component';
+import { JuegoDeGeocachingRankingComponent } from '../juego-de-geocaching-ranking/juego-de-geocaching-ranking.component';
 
 @Component({
   selector: 'app-juego-de-geocaching',
@@ -29,6 +30,7 @@ export class JuegoDeGeocachingPage implements OnInit {
   respuestabonus: boolean = false;
   lat: number;
   lng: number;
+  
 
 
 
@@ -48,11 +50,13 @@ export class JuegoDeGeocachingPage implements OnInit {
   idpreguntasBonus: number[];
   puntogeolocalizable: PuntoGeolocalizable;
   puntosgeolocalizables: PuntoGeolocalizable[];
+  pistaDificil: string;
+  pistaFacil: string;
   preguntabasica: Pregunta;
   preguntabonus: Pregunta;
 
   MisAlumnosDelJuegoDeGeocaching: MiAlumnoAMostrarJuegoDeGeocaching[];
-  
+  alumnosTabla: MiAlumnoAMostrarJuegoDeGeocaching[];
 
   puntuaciontotal: number = 0;
   numeroEtapas: number;
@@ -77,6 +81,7 @@ export class JuegoDeGeocachingPage implements OnInit {
   RespuestaEscogidaBonus: string;
   Nota: number = 0;
   PuntuacionInicial: string = '';
+  ranking: number;
   iconoPosicion = L.icon({
     iconUrl: '../../assets/marker.png',
 
@@ -103,11 +108,14 @@ export class JuegoDeGeocachingPage implements OnInit {
     private platform: Platform,
     public alertController: AlertController,
     private popCtrl: PopoverController,
+    private cd: ChangeDetectorRef
     // private servidor: Socket
   ) { }
 
   ngOnInit() {
     // this.puntogeolocalizable.PistaDificil=" "
+    this.pistaDificil = " ";
+    this.pistaFacil = " ";
     this.alumnoId = this.sesion.DameAlumno().id;
     this.juegoSeleccionado = this.sesion.DameJuego();
     this.puntuacionCorrecta = this.juegoSeleccionado.PuntuacionCorrecta;
@@ -116,18 +124,25 @@ export class JuegoDeGeocachingPage implements OnInit {
     this.puntuacionIncorrectaBonus = this.juegoSeleccionado.PuntuacionIncorrectaBonus;
     this.idpreguntasBasicas = this.juegoSeleccionado.PreguntasBasicas;
     this.idpreguntasBonus = this.juegoSeleccionado.PreguntasBonus;
-    
-    console.log(`estas en el geocaching`)
+    this.identificador = navigator.geolocation.watchPosition((position) => {
+      this.lat =  position.coords.latitude;
+      this.lng =  position.coords.longitude;
+      console.log('latitud ' + this.lat);
+    console.log('longitud ' + this.lng );
+    });
     setInterval(()=> {
-      console.log("estas dentro del interval")
-      navigator.geolocation.getCurrentPosition(position => {
-        console.log("entro en el getcurrentposition")
-        this.lat = position.coords.latitude;
-        this.lng = position.coords.longitude;
-        console.log(`Estas en ${this.lat}, ${this.lng}`);
-        this.setLocation();
-      });
-    },5000)
+      this.setLocation();
+    },1000)
+    // setInterval(()=> {
+    //   console.log("estas dentro del interval")
+    //   // navigator.geolocation.getCurrentPosition(position => {
+    //   //   console.log("entro en el getcurrentposition")
+    //   //   this.lat = position.coords.latitude;
+    //   //   this.lng = position.coords.longitude;
+    //   //   console.log(`Estas en ${this.lat}, ${this.lng}`);
+    //     this.setLocation();
+    //   });
+    // },5000)
 
     this.peticionesAPI.DameInscripcionAlumnoJuegoDeGeocaching(this.alumnoId, this.juegoSeleccionado.id)
     .subscribe (res => {
@@ -163,13 +178,16 @@ export class JuegoDeGeocachingPage implements OnInit {
       }
       // this.servidor.connect();
 
+      setInterval(() => {
+        this.updateRanking();
+        
+      }, 15000); 
   }
   ngAfterViewInit() {
     this.initMap();
   }
   private initMap(): void {
-    this.map = L.map('map').setView([41.275500, 1.985452],17);
-
+    this.map = L.map('map',{zoomControl:false}).setView([41.275500, 1.985452],17);
     this.map.invalidateSize();
     L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v11/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZXJyZXplZXRhIiwiYSI6ImNsZnZnaHVkdDA3MXIzZm83bWduMnc0ZGIifQ.ZKp87eXXMQEO1MNCM_wXKA', {
     maxZoom: 20,
@@ -194,6 +212,21 @@ export class JuegoDeGeocachingPage implements OnInit {
     else {
       this.frio();
     }
+  }
+  muestraPista(){
+    Swal.fire({
+      title: '¿Seguro que quieres ver la pista extra?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, estoy seguro',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.value) {
+        this.rendirse = true;
+      }
+    })
   }
 
 //   empezamos() {
@@ -222,6 +255,34 @@ export class JuegoDeGeocachingPage implements OnInit {
     
 
 // }
+
+updateRanking(){
+    
+  this.calculos.PosicionAlumnoJuegoDeGeocaching(this.juegoSeleccionado.id, this.alumnoId).subscribe(
+    res => {
+      this.ranking = res;
+    },
+    error => {
+      console.error(error);
+    }
+  );
+  console.log(this.ranking);
+  this.cd.markForCheck();
+  
+}
+
+
+RankingClick(): void {
+  this.rankingEvent();
+}
+async rankingEvent() {
+  const popover = await this.popCtrl.create({
+    component: JuegoDeGeocachingRankingComponent,
+    cssClass: 'contact-popover'
+  })
+
+  return await popover.present();
+}
 
 
 calculateDistance(lon1, lon2, lat1, lat2){
@@ -343,6 +404,9 @@ finalizar(){
 }
 display () {
   if (this.muestraInfo==true) {
+    this.pistaDificil = this.puntogeolocalizable.PistaDificil;
+    console.log("la pista dificil es"+this.pistaDificil)
+    this.pistaFacil = this.puntogeolocalizable.PistaFacil;
     document.getElementById("juego").style.display = "block";
     this.map.invalidateSize();
     document.getElementById("botonInformacion").style.display = "none";

@@ -15,8 +15,30 @@
   <app-juego-de-geocaching-info style="display: block" id="info"></app-juego-de-geocaching-info>
   <ion-content style="display: none" id="juego">
     <div id="map"></div>
+    <ion-card class="tarjetaPista" *ngIf="rendirse; else Aviso_rendirse">
+      <ion-card-content>
+        <div class="contenedor">
+          <div class="child">
+            <h4 style = "text-align: left;">Pista fácil </h4> 
+            <h2 style = "text-align: left; color:rgb(172, 26, 26)"> {{pistaFacil}} </h2>
+          </div>
+          <div class="child">
+            <h4 style = "text-align: right;">Distancia a tu destino </h4>
+            <h1 style = "text-align: right; color: rgb(172, 26, 26)">{{distancia}} metros </h1>
+          </div>
+        </div>
+      </ion-card-content> 
+    </ion-card>
+
+    <ng-template #Aviso_rendirse>
+      <ion-card class="tarjetaPista" (click)="Rendirse()">
+        <h4 style = "text-align: center;">Pista difícil </h4> 
+        <h2 style = "text-align: center; color: rgb(172, 26, 26)"> {{pistaDificil}} </h2>
+      </ion-card>
+    </ng-template>
+
     <ion-button id="butInfo" (click)="popoverEvent()" > i </ion-button>
-    <ion-button id="ranking"> Ver ranking </ion-button> <ion-button id="contestar" class="lejos"> Responder pregunta</ion-button>
+    <ion-button id="ranking" (click)="RankingClick()"> Ver ranking </ion-button> <ion-button id="contestar" class="lejos"> Responder pregunta</ion-button>
     <!--<ion-card id="pistaDificil">
        <ion-card-content>
         <h4 style = "text-align: center;">Pista difícil </h4> 

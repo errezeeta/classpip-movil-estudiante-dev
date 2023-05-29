@@ -1,0 +1,19 @@
+<table>
+  <thead>
+      <tr>
+          <th>Nombre Jugador</th>
+          <th>Puntuación</th>
+          <th>Etapa</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr *ngFor="let alumno of alumnosTabla">
+          
+          <td>{{ alumno.Nombre }}</td>
+          <td>{{ alumno.Puntuacion }}</td>
+          <td>{{ alumno.Etapa }}</td>
+      </tr>
+  </tbody>
+
+
+</table>

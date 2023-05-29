@@ -14,7 +14,7 @@ import {
 } from '../clases/index';
 // import { MatTableDataSource } from '@angular/material/table';
 // import { MiAlumnoAMostrarJuegoDePuntos } from '../clases/MiAlumnoAMostrarJuegoDePuntos';
-import { Observable, observable } from 'rxjs';
+import { Observable, observable, of } from 'rxjs';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { stringify } from 'querystring';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
@@ -23,6 +23,8 @@ import { MiAlumnoAMostrarJuegoDeCuestionario } from '../clases/MiAlumnoAMostrarJ
 import { AlumnoJuegoDeCuestionario } from '../clases/AlumnoJuegoDeCuestionario';
 import * as URL from '../URLs/urls';
 import { TablaEquipoJuegoDeCuestionario } from '../clases/TablaEquipoJuegoDeCuestionario';
+import { map } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root'
@@ -2756,6 +2758,37 @@ return EnfrentamientosJornadaSeleccionada;
       }
     });
     return InformacionAlumno;
+  }
+
+  PosicionAlumnoJuegoDeGeocaching(juegoDeGeocachingId: number, alumnoId: number): Observable<number>{
+
+    
+    const listaInscritosJuego: AlumnoJuegoDeGeocaching[]=[];
+  
+    return this.peticionesAPI.ListaInscripcionesAlumnosJuegoDeGeocaching(juegoDeGeocachingId).pipe(
+      map(res => {
+      res.forEach(alumnoAñadido => listaInscritosJuego.push(alumnoAñadido));
+      
+      listaInscritosJuego.sort((a, b) => b.Puntuacion - a.Puntuacion);
+      console.log(listaInscritosJuego);
+      
+      let ranking = -1;
+      for(let i = 0; i <listaInscritosJuego.length; i++){
+        if(listaInscritosJuego[i].alumnoId === alumnoId){
+          ranking = i +1;
+          break;
+        }
+      }
+
+      return ranking;
+    })
+
+    );
+  }
+
+  public ListaParaRankingGeocaching(juegoDeGeocachingId: number): Observable<MiAlumnoAMostrarJuegoDeGeocaching[]> {
+
+    return of(this.DameListaAlumnosJuegoGeocachingOrdenada(juegoDeGeocachingId));
   }
 
   public DamePreguntasJuegoDeGeocaching(PreguntasId: number[]): any {
