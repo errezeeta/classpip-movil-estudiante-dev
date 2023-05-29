@@ -6,7 +6,7 @@ import { Juego, AlumnoJuegoDeGeocaching, Escenario, PuntoGeolocalizable, MiAlumn
 import { Pregunta } from '../clases/Pregunta';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { MatStepper } from '@angular/material';
+import { MatStepper } from '@angular/material/stepper';
 import { Socket } from 'ngx-socket-io';
 import * as L from 'leaflet';
 import { JuegoDeGeocachingInfoComponent } from '../juego-de-geocaching-info/juego-de-geocaching-info.component';

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { SesionService} from '../servicios/sesion.service';
 import { NavController, LoadingController, AlertController } from '@ionic/angular';
 import { HttpClient} from '@angular/common/http';
-import { Http, ResponseContentType} from '@angular/http';
 import { PeticionesAPIService} from '../servicios/index';
 import { CalculosService } from '../servicios/calculos.service';
 import {  Juego, Equipo, Alumno, Cromo} from '../clases/index';
@@ -35,7 +34,7 @@ export class IntercambiarCromosPage implements OnInit {
     public navCtrl: NavController,
     private peticionesAPI: PeticionesAPIService,
     private calculos: CalculosService,
-    private http: HttpClient, private https: Http,
+    private http: HttpClient, private https: HttpClient,
     public loadingController: LoadingController,
     public alertController: AlertController,
     public modalCtrl: ModalController,
