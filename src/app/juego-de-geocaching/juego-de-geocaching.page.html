@@ -37,14 +37,12 @@
       </ion-card>
     </ng-template>
 
+
     <ion-button id="butInfo" (click)="popoverEvent()" > i </ion-button>
-    <ion-button id="ranking" (click)="RankingClick()"> Ver ranking </ion-button> <ion-button id="contestar" class="lejos"> Responder pregunta</ion-button>
-    <!--<ion-card id="pistaDificil">
-       <ion-card-content>
-        <h4 style = "text-align: center;">Pista difícil </h4> 
-        <h2 style = "text-align: center; color: rgb(172, 26, 26)">{{puntogeolocalizable.PistaDificil}} </h2>
-      </ion-card-content>
-    </ion-card> -->
+    <div id="containerBotones">
+      <ion-button id="ranking" (click)="RankingClick()"> Ver ranking </ion-button>
+      <ion-button id="contestar" class="lejos"> Responder pregunta</ion-button>
+    </div>
   </ion-content>
   <button id="botonInformacion" mat-button (click)="display()" mat-raised-button color="primary">Oculta info</button>
 </ion-content>
