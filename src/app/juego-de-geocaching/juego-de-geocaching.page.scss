@@ -87,7 +87,11 @@
 }
 .contact-popover{
     --width: 500px!important;
+    --border-radius: 20px!important;
 }
+.contact-popover .popover-content {
+    border-radius: 20px;
+  }
 #containerBotones {
     height: 12%;
 }
