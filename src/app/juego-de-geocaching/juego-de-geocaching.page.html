@@ -15,7 +15,7 @@
   <app-juego-de-geocaching-info style="display: block" id="info"></app-juego-de-geocaching-info>
   <ion-content style="display: none" id="juego">
     <div id="map"></div>
-    <ion-card class="tarjetaPista" *ngIf="rendirse; else Aviso_rendirse">
+    <ion-card class="tarjetaPistaFacil" *ngIf="rendirse; else Aviso_rendirse">
       <ion-card-content>
         <div class="contenedor">
           <div class="child">
@@ -31,9 +31,15 @@
     </ion-card>
 
     <ng-template #Aviso_rendirse>
-      <ion-card class="tarjetaPista" (click)="Rendirse()">
-        <h4 style = "text-align: center;">Pista difícil </h4> 
-        <h2 style = "text-align: center; color: rgb(172, 26, 26)"> {{pistaDificil}} </h2>
+      <ion-card class="tarjetaPistaDificil" (click)="Rendirse()">
+        <div id="textoPD">
+          <p id="PDelement">Pista difícil</p>
+        </div>
+        <div id="textoPista">
+          <p id="pistaelement">{{pistaDificil}}</p>
+        </div>
+        <!-- <h4 style = "text-align: center;">Pista difícil </h4> 
+        <h2 style = "text-align: center; color: rgb(172, 26, 26)"> {{pistaDificil}} </h2> -->
       </ion-card>
     </ng-template>
 

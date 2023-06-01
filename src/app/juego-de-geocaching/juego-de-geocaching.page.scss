@@ -69,14 +69,42 @@
     margin-right: 98%;
     height: 6%;
 }
-.tarjetaPista {
+.tarjetaPistaFacil {
     z-index: 1;
     scale: 1;
     width: 99%;
     margin: 0.5%;
-    height: 12%;
+    height: 10%!important;
 }
-
+.tarjetaPistaDificil {
+    background: linear-gradient(140deg, #354f7b 30%, white 30%);
+    z-index: 1;
+    scale: 1;
+    width: 99%;
+    margin: 0.5%;
+    height: 10%!important;
+}
+#textoPD {
+    float: left;
+    width: 26%;
+    margin-right: 6%;
+}
+#PDelement {
+    color: white;
+    text-align: center;
+    font-size: 30px;
+    font-style: italic;
+}
+#textoPista {
+    float: left;
+    width: 68%;
+}
+#pistaelement {
+    color: rgb(164, 50, 50);
+    text-align: center;
+    font-size: 30px;
+    font-style: italic;
+}
 .button-rendirse {
     background-color: rgb(216, 14, 7);
     color: white;
