@@ -58,13 +58,16 @@
     left: 25px; */
     margin-top: 175px; 
 }
+#padding {
+    height: 64%;
+}
 #butInfo {
     --ion-color-primary: #354f7b;
     --border-radius: 50px;
     scale: 1;
     margin: 0.5%;
-    margin-bottom: 30%;
     margin-right: 98%;
+    height: 6%;
 }
 .tarjetaPista {
     z-index: 1;
