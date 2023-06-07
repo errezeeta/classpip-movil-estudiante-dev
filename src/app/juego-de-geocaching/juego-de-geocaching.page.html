@@ -17,16 +17,16 @@
     <div id="map"></div>
     <ion-card class="tarjetaPistaFacil" *ngIf="rendirse; else Aviso_rendirse">
       <ion-card-content>
-        <div class="contenedor">
-          <div class="child">
-            <h4 style = "text-align: left;">Pista fácil </h4> 
-            <h2 style = "text-align: left; color:rgb(172, 26, 26)"> {{pistaFacil}} </h2>
+          <div id="textoPF">
+            <p id="PFelement">Pista facil</p>
           </div>
-          <div class="child">
-            <h4 style = "text-align: right;">Distancia a tu destino </h4>
-            <h1 style = "text-align: right; color: rgb(172, 26, 26)">{{distancia}} metros </h1>
+          <div id="textoPistaFacil">
+            <p id="pistaFacilElement">{{pistaFacil}}</p>
           </div>
-        </div>
+          <div id="distanciaContainer">
+            <p id="textoEnunciado">Distancia hasta el punto:</p>
+            <p id="textoDistancia">{{distancia}}m</p>
+          </div>
       </ion-card-content> 
     </ion-card>
 
@@ -35,8 +35,8 @@
         <div id="textoPD">
           <p id="PDelement">Pista difícil</p>
         </div>
-        <div id="textoPista">
-          <p id="pistaelement">{{pistaDificil}}</p>
+        <div id="textoPistaDificil">
+          <p id="pistaDificilElement">{{pistaDificil}}</p>
         </div>
         <!-- <h4 style = "text-align: center;">Pista difícil </h4> 
         <h2 style = "text-align: center; color: rgb(172, 26, 26)"> {{pistaDificil}} </h2> -->
