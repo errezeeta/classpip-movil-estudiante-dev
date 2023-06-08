@@ -1,7 +1,7 @@
 // Este modulo lo he creado para conseguir que el DataPicker
 // muestre la fecha en el formato que quiero, al seleccionarala.
 
-import { NativeDateAdapter } from '@angular/material';
+import { NativeDateAdapter } from '@angular/material/core';
 
 import * as moment from 'moment';
 

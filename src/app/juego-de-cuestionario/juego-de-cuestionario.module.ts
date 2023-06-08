@@ -8,7 +8,8 @@ import { IonicModule } from '@ionic/angular';
 import { JuegoDeCuestionarioPage } from './juego-de-cuestionario.page';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule, MatRadioModule } from '@angular/material';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
 import {CanExitCuestionarioGuardService} from '../servicios/can-exit-cuestionario-guard.service';
 
 const routes: Routes = [

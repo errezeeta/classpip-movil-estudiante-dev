@@ -3,7 +3,7 @@ import { PeticionesAPIService, SesionService } from '../servicios/index';
 import { CalculosService, ComServerService } from '../servicios';
 import { NavController, AlertController, PickerController  } from '@ionic/angular';
 import { CuestionarioSatisfaccion, Alumno, AlumnoJuegoDeCuestionarioSatisfaccion } from '../clases';
-import {MatStepper} from '@angular/material';
+import {MatStepper} from '@angular/material/stepper';
 import {PickerOptions} from '@ionic/core';
 import { IonSlides } from '@ionic/angular';
 import { Router } from '@angular/router';

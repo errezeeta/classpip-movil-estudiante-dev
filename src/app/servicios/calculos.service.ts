@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SesionService, PeticionesAPIService } from './index';
-import { HttpClient } from '@angular/common/http';
-import { Http, ResponseContentType } from '@angular/http';
+import { HttpClient} from '@angular/common/http';
+
 // tslint:disable-next-line:max-line-length
 import {
   // tslint:disable-next-line:max-line-length
@@ -25,6 +25,8 @@ import * as URL from '../URLs/urls';
 import { TablaEquipoJuegoDeCuestionario } from '../clases/TablaEquipoJuegoDeCuestionario';
 import { map } from 'rxjs/operators';
 
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -43,11 +45,12 @@ export class CalculosService {
   informacionPartidos: InformacionPartidosLiga[];
   equipos: Equipo[] = [];
   puntos: number;
+  puntosGeocaching: number;
   MiImagenCromo: string;
   constructor(
     private sesion: SesionService,
     private peticionesAPI: PeticionesAPIService,
-    public https: Http
+    public https: HttpClient
   ) {
   }
 
@@ -911,9 +914,9 @@ export class CalculosService {
         this.https.get(URL.ImagenesCromo + listaCromos[i].cromo.ImagenDelante,
 
         // this.https.get('http://localhost:3000/api/imagenes/ImagenCromo/download/' + listaCromos[i].cromo.ImagenDelante,
-          { responseType: ResponseContentType.Blob }).subscribe(
+          { responseType: 'blob' }).subscribe(
             response => {
-              const blob = new Blob([response.blob()], { type: 'image/jpg' });
+              const blob = new Blob([response], { type: 'image/jpg' });
               const reader = new FileReader();
               reader.addEventListener('load', () => {
                 imagenesCromo[i] = reader.result.toString();
@@ -936,9 +939,9 @@ export class CalculosService {
         this.https.get(URL.ImagenesCromo + listaCromos[i].cromo.ImagenDetras,
 
         // this.https.get('http://localhost:3000/api/imagenes/ImagenCromo/download/' + listaCromos[i].cromo.ImagenDetras,
-          { responseType: ResponseContentType.Blob }).subscribe(
+          { responseType: 'blob' }).subscribe(
             response => {
-              const blob = new Blob([response.blob()], { type: 'image/jpg' });
+              const blob = new Blob([response], { type: 'image/jpg' });
               const reader = new FileReader();
               reader.addEventListener('load', () => {
                 imagenesCromo[i] = reader.result.toString();
@@ -960,9 +963,9 @@ export class CalculosService {
       this.https.get(URL.ImagenesCromo + cromo.cromo.Imagen,
 
       // this.https.get('http://localhost:3000/api/imagenes/ImagenCromo/download/' + cromo.cromo.Imagen,
-        { responseType: ResponseContentType.Blob }).subscribe(
+        { responseType: 'blob' }).subscribe(
           response => {
-            const blob = new Blob([response.blob()], { type: 'image/jpg' });
+            const blob = new Blob([response], { type: 'image/jpg' });
             const reader = new FileReader();
             reader.addEventListener('load', () => {
               this.MiImagenCromo = reader.result.toString();
@@ -982,9 +985,9 @@ export class CalculosService {
       this.https.get(URL.ImagenesCromo + MiImagen,
 
       // this.https.get('http://localhost:3000/api/imagenes/ImagenAlumno/download/' + MiImagen,
-        { responseType: ResponseContentType.Blob }).subscribe(
+        { responseType: 'blob'}).subscribe(
           response => {
-            const blob = new Blob([response.blob()], { type: 'image/jpg' });
+            const blob = new Blob([response], { type: 'image/jpg' });
             const reader = new FileReader();
             reader.addEventListener('load', () => {
               ImagenAlumno[0] = reader.result.toString();
@@ -2699,6 +2702,9 @@ return EnfrentamientosJornadaSeleccionada;
 }
 
    //////////////////////////////////////// JUEGO DE GEOCACHING ///////////////////////////////////
+
+
+
 
   public DameAlumnosJuegoDeGeocaching(juegoId: number): MiAlumnoAMostrarJuegoDeGeocaching[] {
     let InformacionAlumno: MiAlumnoAMostrarJuegoDeGeocaching[] = [];

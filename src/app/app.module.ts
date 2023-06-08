@@ -8,7 +8,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpModule } from '@angular/http';
+
 import { HttpClientModule } from '@angular/common/http';
 import { IniciPageModule } from './inici/inici.module';
 
@@ -19,7 +19,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule, MatRadioModule } from '@angular/material';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import * as URL from './URLs/urls';
 
@@ -47,7 +48,7 @@ import { LongPressModule } from 'ionic-long-press';
 import { IonicGestureConfig } from '../ionicGestureConfig';
 import { WheelSelector } from '@ionic-native/wheel-selector/ngx';
 
-import { DateAdapter } from '@angular/material';
+import { DateAdapter } from '@angular/material/core';
 import { CustomDateAdapter } from './customDataAdapter';
 import {DatePipe} from '@angular/common';
 
@@ -58,7 +59,6 @@ import {DatePipe} from '@angular/common';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    HttpModule,
     HttpClientModule,
     IniciPageModule,
     MatStepperModule,

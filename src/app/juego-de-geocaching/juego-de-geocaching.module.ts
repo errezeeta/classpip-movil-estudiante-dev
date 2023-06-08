@@ -8,7 +8,10 @@ import { IonicModule } from '@ionic/angular';
 import { JuegoDeGeocachingPage } from './juego-de-geocaching.page';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule, MatRadioModule } from '@angular/material';
+import { MatInputModule} from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+import { ResponderPreguntaJuegoGeocachingComponent } from '../responder-pregunta-juego-geocaching/responder-pregunta-juego-geocaching.component';
+
 
 const routes: Routes = [
   {
@@ -28,6 +31,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [JuegoDeGeocachingPage]
+  entryComponents: [ResponderPreguntaJuegoGeocachingComponent],
+  declarations: [JuegoDeGeocachingPage, ResponderPreguntaJuegoGeocachingComponent]
 })
 export class JuegoDeGeocachingPageModule {}

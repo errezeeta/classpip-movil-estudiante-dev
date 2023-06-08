@@ -5,7 +5,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 import { MatStepperModule } from '@angular/material/stepper';
-import { MatInputModule, MatRadioModule } from '@angular/material';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { JuegoCuestionarioSatisfaccionPage } from './juego-cuestionario-satisfaccion.page';
 

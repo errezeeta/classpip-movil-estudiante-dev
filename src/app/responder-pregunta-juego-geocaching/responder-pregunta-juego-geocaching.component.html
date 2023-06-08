@@ -1,0 +1,49 @@
+      
+<mat-horizontal-stepper #stepper style="width:100%;"  [selectedIndex]="controlPreguntas ? 1 : 0" >
+      <mat-step [completed]="controlPreguntas" [editable]="!controlPreguntas">
+        <p>La pregunta básica es la siguiente: </p>
+        <p style="font-size: 18px;">{{preguntabasica.Pregunta}}</p>
+        <div *ngIf="preguntabasica.Tipo === 'Verdadero o falso'">
+          <img *ngIf="preguntabasica.Imagen" style = "width: 250px; height: 250px" [src]="preguntabasica.Imagen">
+          <br>
+          <br>
+          <button (click)="respuestaVerdaderoFalsoBasica(true)">Verdadero</button>
+          <button (click)="respuestaVerdaderoFalsoBasica(false)">Falso</button>
+        </div>
+        <div *ngIf="preguntabasica.Tipo === 'Cuatro opciones'">
+          <br>
+          <img *ngIf="preguntabasica.Imagen" style = "width: 250px; height: 250px" [src]="preguntabasica.Imagen">
+          <br>
+          <br>
+          <ion-select [(ngModel)]="opcionSeleccionada">
+          <ion-select-option *ngFor="let opcion of respuestasPosiblesBasicas">{{ opcion }}</ion-select-option>
+          </ion-select>
+          <button (click)="confirmarOpcionBasica()" >Confirma la respuesta</button>
+        </div>
+        
+      </mat-step>  
+
+
+      <mat-step *ngIf="respuesta && bonus">
+        <p>Como has acertado, responde esta pregunta para puntos extras:</p>
+           <p style="font-size: 18px;">{{preguntabonus.Pregunta}}</p>
+           <div *ngIf="preguntabonus.Tipo === 'Verdadero o falso'">
+            <img *ngIf="preguntabonus.Imagen" style = "width: 250px; height: 250px" [src]="preguntabonus.Imagen">
+            <br>
+            <br>
+            <button (click)="respuestaVerdaderoFalsoBonus(true)">Verdadero</button>
+            <button (click)="respuestaVerdaderoFalsoBonus(false)">Falso</button>
+          </div>
+          <div *ngIf="preguntabonus.Tipo === 'Cuatro opciones'">
+            <br>
+            <img *ngIf="preguntabonus.Imagen" style = "width: 250px; height: 250px" [src]="preguntabonus.Imagen">
+            <br>
+            <br>
+            <ion-select [(ngModel)]="opcionSeleccionada">
+            <ion-select-option *ngFor="let opcion of respuestasPosiblesBonus">{{ opcion }}</ion-select-option>
+            </ion-select>
+            <button (click)="confirmarOpcionBonus()" >Confirma la respuesta</button>
+          </div>
+      </mat-step>
+
+</mat-horizontal-stepper>
