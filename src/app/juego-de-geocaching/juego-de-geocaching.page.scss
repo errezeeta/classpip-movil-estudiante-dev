@@ -70,12 +70,10 @@
     height: 6%;
 }
 .tarjetaPistaFacil {
-    background: linear-gradient(140deg, #7b3535 30%, white 30% 80%, #7b3535 80%);
+    background: linear-gradient(120deg, #7b3535 30%, white 30% 80%, #7b3535 80%);
     z-index: 1;
     scale: 1;
-    width: 99%;
-    margin: 0.5%;
-    height: 10%!important;
+    margin:1.5%;
 }
 #textoPF {
     float: left;
@@ -85,7 +83,6 @@
 #PFelement {
     color: white;
     text-align: center;
-    font-size: 30px;
     font-style: italic;
 }
 #textoPistaFacil {
@@ -96,28 +93,23 @@
 #pistaFacilElement {
     color: #7b3535;
     text-align: center;
-    font-size: 30px;
     font-style: italic;
 }
 #textoEnunciado {
     color: white;
     text-align: center;
-    font-size: 15px;
     font-style: italic;
 }
-#textoDistancia {
+#distanciaElement {
     color: white;
     text-align: center;
-    font-size: 30px;
     font-style: italic;
 }
 .tarjetaPistaDificil {
-    background: linear-gradient(140deg, #354f7b 30%, white 30%);
+    background: linear-gradient(120deg, #354f7b 30%, white 30%);
     z-index: 1;
     scale: 1;
-    width: 99%;
-    margin: 0.5%;
-    height: 10%!important;
+    margin: 1.5%;
 }
 #textoPD {
     float: left;
@@ -127,7 +119,6 @@
 #PDelement {
     color: white;
     text-align: center;
-    font-size: 30px;
     font-style: italic;
 }
 #textoPistaDificil {
@@ -137,13 +128,11 @@
 #pistaDificilElement {
     color: rgb(164, 50, 50);
     text-align: center;
-    font-size: 30px;
     font-style: italic;
 }
 .button-rendirse {
     background-color: rgb(216, 14, 7);
     color: white;
-    font-size: 18px;
     padding: 20px;
     border-radius: 20px;
     margin-top: 175px; 

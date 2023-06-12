@@ -16,7 +16,6 @@
   <ion-content style="display: none" id="juego">
     <div id="map"></div>
     <ion-card class="tarjetaPistaFacil" *ngIf="rendirse; else Aviso_rendirse">
-      <ion-card-content>
           <div id="textoPF">
             <p id="PFelement">Pista facil</p>
           </div>
@@ -24,10 +23,10 @@
             <p id="pistaFacilElement">{{pistaFacil}}</p>
           </div>
           <div id="distanciaContainer">
-            <p id="textoEnunciado">Distancia hasta el punto:</p>
-            <p id="textoDistancia">{{distancia}}m</p>
+            <p id="distanciaElement">{{distancia}}</p>
+            <!-- <p id="textoEnunciado">Distancia hasta el punto:</p>
+            <p id="textoDistancia">{{distancia}}m</p> -->
           </div>
-      </ion-card-content> 
     </ion-card>
 
     <ng-template #Aviso_rendirse>
