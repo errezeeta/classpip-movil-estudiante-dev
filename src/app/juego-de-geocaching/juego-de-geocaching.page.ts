@@ -362,7 +362,7 @@ async rankingEvent() {
      popover.onDidDismiss().then(() => {
 
       this.recibirPuntos();
-      this.siguiente();
+      //this.siguiente();
 
      });
 
@@ -387,21 +387,7 @@ calculateDistance(lon1, lon2, lat1, lat2){
   return dis
 }
 
-PreguntaBasica(){
-    if (this.RespuestaEscogidaBasica === this.preguntabasica.RespuestaCorrecta) {
-      console.log('paso por preguntabasica y la acierto');
-      this.respuesta = true;
-      this.RespuestaCorrecta();
-    }
-    if (this.RespuestaEscogidaBasica !== this.preguntabasica.RespuestaCorrecta) {
-      console.log('paso por pregunta basica y la fallo');
-      this.respuesta = false;
-      this.bonus = false;
-      console.log('respuesta' + this.respuesta);
-      console.log('bonus' + this.bonus);
-      this.RespuestaIncorrecta();
-    }
-}
+
 
 async popoverEvent() {
   const popover = await this.popCtrl.create({
@@ -411,17 +397,6 @@ async popoverEvent() {
 
   return await popover.present();
 }
-PreguntaBonus(){
-  if (this.RespuestaEscogidaBonus === this.preguntabonus.RespuestaCorrecta) {
-    console.log('paso por bonus y la acierto');
-    this.respuestabonus = true;
-    this.RespuestaCorrectaBonus();
-  }
-  else {
-    console.log('paso por bonus y la fallo')
-    this.respuestabonus = false;
-    this.RespuestaIncorrectaBonus();
-  }
 
   
 recibirPuntos(){
