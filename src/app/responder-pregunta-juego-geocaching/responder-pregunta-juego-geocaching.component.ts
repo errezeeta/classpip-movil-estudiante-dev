@@ -347,7 +347,7 @@ async RespuestaCorrecta() {
             this.popCtrl.dismiss();
           
           }else{
-            this.finalizar();
+            this.siguiente();
             this.popCtrl.dismiss();
             console.log("finalizamos");
           }
@@ -379,7 +379,7 @@ async RespuestaIncorrecta() {
             this.popCtrl.dismiss();
           
           }else{
-            this.finalizar();
+            this.siguiente()
             this.popCtrl.dismiss();
             console.log("finalizamos");
           }
@@ -407,7 +407,7 @@ async RespuestaCorrectaBonus() {
             this.popCtrl.dismiss();
           
           }else{
-            this.finalizar();
+            this.siguiente();
             this.popCtrl.dismiss();
             console.log("finalizamos");
           }
@@ -435,7 +435,7 @@ async RespuestaIncorrectaBonus() {
             this.popCtrl.dismiss();
           
           }else{
-            this.finalizar();
+            this.siguiente();
             this.popCtrl.dismiss();
             console.log("finalizamos");
           }
