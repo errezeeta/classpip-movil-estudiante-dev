@@ -44,6 +44,7 @@ export class CalculosService {
   informacionPartidos: InformacionPartidosLiga[];
   equipos: Equipo[] = [];
   puntos: number;
+  puntosGeocaching: number;
   MiImagenCromo: string;
   constructor(
     private sesion: SesionService,
@@ -877,6 +878,8 @@ export class CalculosService {
       });
     return InformacionEquipo;
   }
+
+
 
   public DameAlumnosJuegoDeColecciones(juegoDeColeccionId: number) {
     const alumnosObservables = new Observable(obs => {
@@ -2698,6 +2701,9 @@ return EnfrentamientosJornadaSeleccionada;
 }
 
    //////////////////////////////////////// JUEGO DE GEOCACHING ///////////////////////////////////
+
+
+
 
   public DameAlumnosJuegoDeGeocaching(juegoId: number): MiAlumnoAMostrarJuegoDeGeocaching[] {
     let InformacionAlumno: MiAlumnoAMostrarJuegoDeGeocaching[] = [];

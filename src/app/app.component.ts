@@ -41,7 +41,7 @@ export class AppComponent {
         
         this.MiAlumno = alumno;
         console.log ('ya tengo alumno ', this.MiAlumno);
-      //  this.imagenPerfil = URL.ImagenesPerfil + this.MiAlumno.ImagenPerfil;
+      //  this.imagenPerfil = URL.ImagenesPerfilogo-game-controller-bl + this.MiAlumno.ImagenPerfil;
       });
     });
   }

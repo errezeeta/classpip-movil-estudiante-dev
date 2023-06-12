@@ -6,7 +6,6 @@ import { PeticionesAPIService} from '../servicios/index';
 import { CalculosService } from '../servicios/calculos.service';
 import {  Juego, Equipo, Alumno, Cromo} from '../clases/index';
 import { Router } from '@angular/router';
-import { Variable } from '@angular/compiler/src/render3/r3_ast';
 import * as URL from '../URLs/urls';
 import { ModalController } from '@ionic/angular';
 

@@ -1,6 +1,8 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+
+import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { SesionService, PeticionesAPIService } from '../servicios';
 import { NavController, AlertController, Platform, PopoverController } from '@ionic/angular';
+
 import { CalculosService } from '../servicios/calculos.service';
 import { Juego, AlumnoJuegoDeGeocaching, Escenario, PuntoGeolocalizable, MiAlumnoAMostrarJuegoDeGeocaching } from '../clases';
 import { Pregunta } from '../clases/Pregunta';
@@ -8,9 +10,15 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { MatStepper } from '@angular/material/stepper';
 import { Socket } from 'ngx-socket-io';
+import { ResponderPreguntaJuegoGeocachingComponent } from '../responder-pregunta-juego-geocaching/responder-pregunta-juego-geocaching.component';
+
 import * as L from 'leaflet';
 import { JuegoDeGeocachingInfoComponent } from '../juego-de-geocaching-info/juego-de-geocaching-info.component';
 import { JuegoDeGeocachingRankingComponent } from '../juego-de-geocaching-ranking/juego-de-geocaching-ranking.component';
+import { tick } from '@angular/core/testing';
+import { fromEvent } from 'rxjs';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+
 
 @Component({
   selector: 'app-juego-de-geocaching',
@@ -31,6 +39,8 @@ export class JuegoDeGeocachingPage implements OnInit {
   lat: number;
   lng: number;
   
+  tablaJugadores: boolean = false;
+  mostrarPregunta: boolean = false;
 
 
 
@@ -163,17 +173,39 @@ export class JuegoDeGeocachingPage implements OnInit {
  
     });
 
-    this.calculos.DamePreguntasJuegoDeGeocaching(this.idpreguntasBasicas).subscribe(lista => {
-      this.preguntasBasicas = lista.sort(function() {return Math.random() -0.5});; //desorden preguntas basicas
-      this.preguntabasica = lista[this.index];
-      });
- 
-      this.calculos.DamePreguntasJuegoDeGeocaching(this.idpreguntasBonus).subscribe(lista => {
-       this.preguntasBonus = lista.sort(function() {return Math.random() -0.5});; //desorden preguntas bonus
-      this.preguntabonus = lista [this.index];
-       });
+    
 
-       if (this.juegoSeleccionado.JuegoTerminado) {
+     this.calculos.DamePreguntasJuegoDeGeocaching(this.idpreguntasBasicas).subscribe(lista => {
+       this.preguntasBasicas = lista.sort(function() {return Math.random() -0.5});; //desorden preguntas basicas
+       this.preguntabasica = lista[this.index];
+      
+      });
+
+       this.calculos.DamePreguntasJuegoDeGeocaching(this.idpreguntasBonus).subscribe(lista => {
+          this.preguntasBonus = lista.sort(function() {return Math.random() -0.5});; //desorden preguntas bonus
+         this.preguntabonus = lista [this.index];
+          });
+
+    // this.preguntasBasicas = await this.calculos.DamePreguntasJuegoDeGeocaching(this.idpreguntasBasicas).toPromise();
+    // if(this.preguntasBasicas != null){
+    //   this.preguntasBasicas.sort(function() {return Math.random() -0.5});
+    //   this.preguntabasica = this.preguntasBasicas[this.index];
+
+    // }
+
+    // this.preguntasBonus = await this.calculos.DamePreguntasJuegoDeGeocaching(this.idpreguntasBonus).toPromise();
+
+    // if(this.preguntasBonus != null){
+    //   this.preguntasBonus.sort(function() {return Math.random() -0.5});
+    //   this.preguntabonus = this.preguntasBonus[this.index];
+    // }
+
+    // if(this.preguntasBonus != null && this.preguntasBasicas != null){
+    //   this.preparacionpreguntas();
+    // }
+
+  
+    if (this.juegoSeleccionado.JuegoTerminado) {
         this.MisAlumnosDelJuegoDeGeocaching = this.calculos.DameListaAlumnosJuegoGeocachingOrdenada(this.juegoSeleccionado.id);
       }
       // this.servidor.connect();
@@ -285,6 +317,68 @@ async rankingEvent() {
 }
 
 
+
+
+  async ResponderPregunta(){
+
+    this.mostrarPregunta = !this.mostrarPregunta;
+    this.ubicacion = true;
+    console.log(this.preguntasBasicas);
+    console.log(this.preguntasBonus);
+    console.log(this.preguntabasica);
+    console.log("esta es la puntuacion que llevas ahora mismo:" + this.puntuaciontotal);
+
+    const popover = await this.popCtrl.create({
+      component: ResponderPreguntaJuegoGeocachingComponent,
+      //cssClass: 'contact-popover'
+      componentProps:{
+
+        puntosgeolocalizables: this.puntosgeolocalizables,
+        alumnoJuegoDeGeocaching: this.alumnoJuegoDeGeocaching,
+        alumnoId: this.alumnoId,
+        index: this.index,
+        juegoSeleccionado: this.juegoSeleccionado,
+        preguntasBasicas: this.preguntasBasicas,
+        preguntasBonus: this.preguntasBonus,
+        preguntabasica: this.preguntabasica,
+        preguntabonus: this.preguntabonus,
+        respuestasPosiblesBasicas: this.respuestasPosiblesBasicas,
+        respuestasPosiblesBonus: this.respuestasPosiblesBonus,
+        ordenRespuestaCorrectaBasicas: this.ordenRespuestaCorrectaBasicas,
+        ordenRespuestaCorrectaBonus: this.ordenRespuestaCorrectaBonus,
+        puntuacionInicial: this.PuntuacionInicial,
+        puntuaciontotal: this.puntuaciontotal,
+        puntuacionCorrecta: this.puntuacionCorrecta,
+        puntuacionIncorrecta: this.puntuacionIncorrecta,
+        puntuacionCorrectaBonus: this.puntuacionCorrectaBonus,
+        puntuacionIncorrectaBonus: this.puntuacionIncorrectaBonus,
+        rendirse: this.rendirse,
+        
+
+
+      }
+    });
+
+     popover.onDidDismiss().then(() => {
+
+      this.recibirPuntos();
+      this.siguiente();
+
+     });
+
+
+  
+    return await popover.present();
+
+
+
+
+  }
+
+
+
+
+
 calculateDistance(lon1, lon2, lat1, lat2){
   let p = 0.017453292519943295;
   let c = Math.cos;
@@ -328,55 +422,16 @@ PreguntaBonus(){
     this.respuestabonus = false;
     this.RespuestaIncorrectaBonus();
   }
+
+  
+recibirPuntos(){
+  this.puntuaciontotal = this.calculos.puntosGeocaching;
 }
 
-preparacionpreguntas(){
 
-  if (this.respuestasPosiblesBasicas.length === 0) {
 
-    this.respuestasPosiblesBasicas.push(this.preguntasBasicas[this.index].RespuestaIncorrecta1);
-    this.respuestasPosiblesBasicas.push(this.preguntasBasicas[this.index].RespuestaIncorrecta2);
-    this.respuestasPosiblesBasicas.push(this.preguntasBasicas[this.index].RespuestaIncorrecta3);
-    this.respuestasPosiblesBasicas.splice(this.ordenRespuestaCorrectaBasicas[this.index], 0, this.preguntasBasicas[this.index].RespuestaCorrecta);
 
-    this.respuestasPosiblesBonus.push(this.preguntasBonus[this.index].RespuestaIncorrecta1);
-    this.respuestasPosiblesBonus.push(this.preguntasBonus[this.index].RespuestaIncorrecta2);
-    this.respuestasPosiblesBonus.push(this.preguntasBonus[this.index].RespuestaIncorrecta3);
-    this.respuestasPosiblesBonus.splice(this.ordenRespuestaCorrectaBonus[this.index], 0, this.preguntasBonus[this.index].RespuestaCorrecta);
-}
-
-}
-
-Puntuacion(){
-  if (this.respuesta === false) {
-    //ha fallado la pregunta
-    this.Nota = this.puntuacionIncorrecta*(-1);
-  }
-  if (this.respuesta === true) {
-    //acierta pregunta
-    this.Nota = this.puntuacionCorrecta;
-    if (this.rendirse === true) {
-      //se ha rendido
-      this.Nota = 0.8*this.Nota;
-    }
-    if (this.bonus === true){
-      //si realiza el bonus:
-      if (this.respuestabonus === true){
-        //acierta pregunta bonus
-        this.Nota = this.Nota + (this.Nota*this.puntuacionCorrectaBonus*0.01);
-      }
-      if (this.respuestabonus === false) {
-        //falla pregunta bonus
-        this.Nota = this.Nota - (this.Nota*this.puntuacionIncorrectaBonus*0.01);
-      }
-    }
-  }
-  this.puntuaciontotal = this.puntuaciontotal + this.Nota;
-  this.peticionesAPI.PonerNotaAlumnoJuegoDeGeocaching(new AlumnoJuegoDeGeocaching (this.alumnoId, this.juegoSeleccionado.id,this.puntuaciontotal, this.index+1), this.alumnoJuegoDeGeocaching[0].id)
-    .subscribe(res => {
-      console.log(res);
-    });
-}
+ 
 
 // siguiente(){
 //   //reset de todas las variables
@@ -525,7 +580,7 @@ async llegada() {
   this.ubicacion=true;
   console.log('llegada: ' + this.ubicacion);
   navigator.geolocation.clearWatch (this.identificador);
-  this.preparacionpreguntas();
+  
   console.log('llegada al punto');
   console.log('clearwatch');
 
@@ -546,85 +601,6 @@ async llegada() {
           // console.log('clearwatch');
 
 
-        }
-      }
-    ]
-  });
-  await confirm.present();
-}
-
-async RespuestaCorrecta() {
-  const confirm = await this.alertCtrl.create({
-    header: 'RESPUESTA CORRECTA',
-    message: '¿Quieres responder la pregunta Bonus?',
-    buttons: [
-      {
-        text: 'SI',
-        handler: () => {
-          this.bonus=true;
-          console.log('hay bonus');
-          
-        }
-      }, {
-        text: 'NO',
-        role: 'cancel',
-        handler: () => {
-          this.bonus=false;
-          console.log('no hay bonus');
-          this.Puntuacion();
-        }
-      }
-    ]
-  });
-  await confirm.present();
-}
-
-async RespuestaIncorrecta() {
-  const confirm = await this.alertCtrl.create({
-    header: 'RESPUESTA INCORRECTA',
-    message: this.preguntasBasicas[this.index].FeedbackIncorrecto,
-    buttons: [
-        {
-        text: 'OK',
-        role: 'cancel',
-        handler: () => {
-          this.bonus=false;
-          console.log('error en la pregunta, no hay bonus');
-          this.Puntuacion();
-        }
-      }
-    ]
-  });
-  await confirm.present();
-}
-
-async RespuestaCorrectaBonus() {
-  const confirm = await this.alertCtrl.create({
-    header: 'RESPUESTA BONUS CORRECTA',
-    message: this.preguntasBonus[this.index].FeedbackCorrecto,
-    buttons: [
-      {
-        text: 'OK',
-        handler: () => {
-          console.log('pregunta bonus correcta');
-          this.Puntuacion();
-        }
-      }
-    ]
-  });
-  await confirm.present();
-}
-
-async RespuestaIncorrectaBonus() {
-  const confirm = await this.alertCtrl.create({
-    header: 'RESPUESTA BONUS INCORRECTA',
-    message: this.preguntasBonus[this.index].FeedbackIncorrecto,
-    buttons: [
-      {
-        text: 'OK',
-        handler: () => {
-          console.log('pregunta bonus incorrecta');
-          this.Puntuacion();
         }
       }
     ]

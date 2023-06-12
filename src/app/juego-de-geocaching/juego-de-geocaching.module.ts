@@ -13,6 +13,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { JuegoDeGeocachingInfoComponent } from '../juego-de-geocaching-info/juego-de-geocaching-info.component';
 import { JuegoDeGeocachingRankingComponent } from '../juego-de-geocaching-ranking/juego-de-geocaching-ranking.component';
+import { ResponderPreguntaJuegoGeocachingComponent } from '../responder-pregunta-juego-geocaching/responder-pregunta-juego-geocaching.component';
+
+
 
 const routes: Routes = [
   {
@@ -33,7 +36,9 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  entryComponents: [JuegoDeGeocachingInfoComponent, JuegoDeGeocachingRankingComponent],
-  declarations: [JuegoDeGeocachingPage, JuegoDeGeocachingInfoComponent, JuegoDeGeocachingRankingComponent]
+
+  entryComponents: [JuegoDeGeocachingInfoComponent, JuegoDeGeocachingRankingComponent, ResponderPreguntaJuegoGeocachingComponent],
+  declarations: [JuegoDeGeocachingPage, JuegoDeGeocachingInfoComponent, JuegoDeGeocachingRankingComponent, ResponderPreguntaJuegoGeocachingComponent]
+
 })
 export class JuegoDeGeocachingPageModule {}
