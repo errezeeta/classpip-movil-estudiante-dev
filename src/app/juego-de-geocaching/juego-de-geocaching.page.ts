@@ -1,5 +1,5 @@
 
-import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { SesionService, PeticionesAPIService } from '../servicios';
 import { NavController, AlertController, Platform, PopoverController } from '@ionic/angular';
 
@@ -27,6 +27,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 })
 export class JuegoDeGeocachingPage implements OnInit {
   @ViewChild('stepper', {static: false}) stepper: MatStepper;
+  @ViewChild('responder', {static: true}) responder: ElementRef;
 
   empezado: boolean = false;
   muestraInfo: boolean = true;
@@ -38,6 +39,7 @@ export class JuegoDeGeocachingPage implements OnInit {
   respuestabonus: boolean = false;
   lat: number;
   lng: number;
+  habilitarResponder: boolean = false;
   
   tablaJugadores: boolean = false;
   mostrarPregunta: boolean = false;
@@ -214,6 +216,8 @@ export class JuegoDeGeocachingPage implements OnInit {
         this.updateRanking();
         
       }, 15000); 
+
+
   }
   ngAfterViewInit() {
     this.initMap();
@@ -240,10 +244,14 @@ export class JuegoDeGeocachingPage implements OnInit {
     if (this.distancia <= 35 && this.alertaproximidad === false) {
       this.caliente();
     }
-    if (this.distancia <= 5 && this.ubicacion === false) {}
+    if (this.distancia <= 5 && this.ubicacion === false) {
+      this.llegada();
+
+    }
     else {
       this.frio();
     }
+ 
   }
   muestraPista(){
     Swal.fire({
@@ -362,7 +370,7 @@ async rankingEvent() {
      popover.onDidDismiss().then(() => {
 
       this.recibirPuntos();
-      //this.siguiente();
+      this.siguiente();
 
      });
 
@@ -408,26 +416,49 @@ recibirPuntos(){
 
  
 
-// siguiente(){
-//   //reset de todas las variables
-//   this.rendirse=false;
-//   this.distancia=1000;
-//   this.alertaproximidad=false;
-//   this.ubicacion=false;
-//   this.respuestasPosiblesBasicas=[];
-//   this.respuestasPosiblesBonus=[];
-//   this.respuesta=false;
-//   this.bonus=false;
-//   this.respuestabonus=false;
-//   this.Nota=0;
-//   this.index=this.index + 1;
-//   this.puntogeolocalizable=this.puntosgeolocalizables[this.index];
-//   this.preguntabasica=this.preguntasBasicas[this.index];
-//   this.preguntabonus=this.preguntasBonus[this.index];
-//   this.mover(2); //volvemos al TERCER PASO
-//   this.empezamos();
-//   // this.servidor.emit('etapaJuegoDeGeocaching', { id: this.alumnoId, puntuacion: this.puntuaciontotal, etapa: this.index});
-// }
+ siguiente(){
+   //reset de todas las variables
+   this.rendirse=false;
+   this.distancia=1000;
+   this.alertaproximidad=false;
+   this.ubicacion=false;
+   this.respuestasPosiblesBasicas=[];
+   this.respuestasPosiblesBonus=[];
+   this.respuesta=false;
+   this.bonus=false;
+   this.respuestabonus=false;
+   this.Nota=0;
+   this.index=this.index + 1;
+   this.puntogeolocalizable=this.puntosgeolocalizables[this.index];
+   this.preguntabasica=this.preguntasBasicas[this.index];
+   this.preguntabonus=this.preguntasBonus[this.index];
+
+  if(this.puntogeolocalizable[this.index] == undefined || this.puntogeolocalizable[this.index] == null){
+    
+    const final = this.alertCtrl.create({
+        header: '¡Felicidades!',
+        message: 'Has terminado el juego',
+        buttons: [{
+          text: 'OK',
+          handler: () => {
+            this.Nota = this.puntuaciontotal;
+            // tslint:disable-next-line:max-line-length
+            this.peticionesAPI.PonerNotaAlumnoJuegoDeGeocaching(new AlumnoJuegoDeGeocaching (this.alumnoId, this.juegoSeleccionado.id,this.Nota, this.numeroEtapas), this.alumnoJuegoDeGeocaching[0].id)
+              .subscribe(res => {
+                console.log(res);
+              });
+
+            this.finalizar();
+
+          }
+
+        }]
+
+    })
+  }
+   
+   // this.servidor.emit('etapaJuegoDeGeocaching', { id: this.alumnoId, puntuacion: this.puntuaciontotal, etapa: this.index});
+ }
 
 finalizar(){
   this.route.navigateByUrl('tabs/inici');
@@ -558,6 +589,9 @@ async llegada() {
   
   console.log('llegada al punto');
   console.log('clearwatch');
+
+  this.habilitarResponder = true;
+  this.responder.nativeElement.disabled=false;
 
 
   const confirm = await this.alertCtrl.create({

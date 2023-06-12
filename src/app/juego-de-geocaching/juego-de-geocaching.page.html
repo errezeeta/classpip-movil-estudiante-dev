@@ -50,7 +50,7 @@
     </div>
     <div id="containerBotones">
       <ion-button id="ranking" (click)="RankingClick()"> Ver ranking </ion-button>
-      <ion-button id="contestar" class="lejos" (click) = "ResponderPregunta()"> Responder pregunta</ion-button>
+      <ion-button #responder [disabled]="!habilitarResponder"   id="contestar" class="lejos" (click) = "ResponderPregunta()"> Responder pregunta</ion-button>
     </div>
   </ion-content>
   <button id="botonInformacion" mat-button (click)="display()" mat-raised-button color="primary">Oculta info</button>
