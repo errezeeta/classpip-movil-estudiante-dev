@@ -53,8 +53,8 @@
 
 
 
-    <!--redonda con ranking-->
-    <ion-badge class="rankinground">{{ ranking }}</ion-badge>
+    <!-- redonda con ranking
+    <ion-badge class="rankinground">{{ ranking }}</ion-badge> -->
 
 
 
@@ -64,6 +64,7 @@
     
     <div id="containerBotones">
       <ion-button id="ranking" (click)="RankingClick()"> Ver ranking </ion-button>
+      <ion-button id="posicionround" > {{ranking}} </ion-button>
       <ion-button #responder [disabled]="!habilitarResponder"   id="contestar" class="lejos" (click) = "ResponderPregunta()"> Responder pregunta</ion-button>
     </div>
   </ion-content>
