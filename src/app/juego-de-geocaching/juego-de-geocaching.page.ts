@@ -463,6 +463,7 @@ recibirPuntos(){
 finalizar(){
   this.route.navigateByUrl('tabs/inici');
 }
+
 display () {
   if (this.muestraInfo==true) {
     this.pistaDificil = this.puntogeolocalizable.PistaDificil;
