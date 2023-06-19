@@ -23,7 +23,7 @@
             <p id="pistaFacilElement">{{pistaFacil}}</p>
           </div>
           <div id="distanciaContainer">
-            <p id="distanciaElement">{{distancia}}</p>
+            <p id="distanciaElement">{{distancia}} m</p>
             <!-- <p id="textoEnunciado">Distancia hasta el punto:</p>
             <p id="textoDistancia">{{distancia}}m</p> -->
           </div>
@@ -53,7 +53,7 @@
       <ion-button #responder [disabled]="!habilitarResponder"   id="contestar" class="lejos" (click) = "ResponderPregunta()"> Responder <br> pregunta</ion-button>
     </div>
   </ion-content>
-  <ion-button id="botonInformacion" mat-button (click)="display()" mat-raised-button color="primary">Oculta info</ion-button>
+  <ion-button id="botonInformacion" mat-button (click)="display()" mat-raised-button color="primary">Empezar el juego</ion-button>
 </ion-content>
 
 

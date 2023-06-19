@@ -434,7 +434,7 @@ calculateDistance(lon1, lon2, lat1, lat2){
 async popoverEvent() {
   const popover = await this.popCtrl.create({
     component: JuegoDeGeocachingInfoComponent,
-    cssClass: 'contact-popover'
+    cssClass: 'info-popover'
   })
 
   return await popover.present();

@@ -11,6 +11,10 @@
     margin: 5px;
     color: black;
 }
+#botonInformacion {
+    display: flex;
+    --ion-color-primary: #354f7b
+}
 
   
   #map {
@@ -187,11 +191,11 @@
     border-radius: 20px;
     margin-top: 175px; 
 }
-.contact-popover{
-    --width: 500px!important;
+.info-popover{
+    --width: 70%!important;
     --border-radius: 20px!important;
 }
-.contact-popover .popover-content {
+.info-popover .popover-content {
     border-radius: 20px;
   }
 #containerBotones {
