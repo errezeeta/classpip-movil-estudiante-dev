@@ -59,7 +59,7 @@
     margin-top: 175px; 
 }
 #padding {
-    height: 63%;
+    height: 65%;
 }
 #butInfo {
     --ion-color-primary: #354f7b;
@@ -70,13 +70,55 @@
     height: 6%;
 }
 #posicionround {
-    --ion-color-primary: #354f7b;
-    width: 50px;
-    height: 50px;
-    border-radius: 100% !important;
+    width: 65px;
+    height: 65px;
     float: left;
-    margin-top: -1%
+    margin: auto;
+    padding: 3px;
+    animation: animacion 2s linear infinite;
 }
+.inicio {
+    display: none;
+}
+.fueratop3 {
+    --ion-color-primary: #354f7b;
+    --border-radius: 50px;
+}
+.top3 {
+    --ion-color-primary: #CD7F32;
+    --border-radius: 15px;
+}
+.top2 {
+    --ion-color-primary: #C0C0C0;
+    --border-radius: 15px;
+}
+.top1 {
+    --ion-color-primary: #ffd700;
+    --border-radius: 15px;
+}
+@keyframes animacion {
+    0%, 7% {
+      transform: rotateZ(0);
+    }
+    15% {
+      transform: rotateZ(-15deg);
+    }
+    20% {
+      transform: rotateZ(10deg);
+    }
+    25% {
+      transform: rotateZ(-10deg);
+    }
+    30% {
+      transform: rotateZ(6deg);
+    }
+    35% {
+      transform: rotateZ(-4deg);
+    }
+    40%, 100% {
+      transform: rotateZ(0);
+    }
+  }
 .tarjetaPistaFacil {
     background: linear-gradient(120deg, #7b3535 30%, white 30% 80%, #7b3535 80%);
     z-index: 1;
@@ -154,6 +196,8 @@
   }
 #containerBotones {
     height: 12%;
+    align-items: center;
+    display: flex;
 }
 #ranking {
     --ion-color-primary: #354f7b;
@@ -163,6 +207,7 @@
     width: 45%;
     height: 100%;
     padding: 0.5%;
+    margin: auto
 }
 #contestar {
     --ion-color-primary: #45484e;
@@ -172,6 +217,7 @@
     width: 45%;
     height: 100%;
     padding: 0.5%;
+    margin: auto
 }
 .lejos{
     --ion-color-primary: #45484e;

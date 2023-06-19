@@ -66,6 +66,7 @@ export class JuegoDeGeocachingPage implements OnInit {
   pistaFacil: string;
   preguntabasica: Pregunta;
   preguntabonus: Pregunta;
+  primerRanking: boolean;
 
   MisAlumnosDelJuegoDeGeocaching: MiAlumnoAMostrarJuegoDeGeocaching[];
   alumnosTabla: MiAlumnoAMostrarJuegoDeGeocaching[];
@@ -136,6 +137,7 @@ export class JuegoDeGeocachingPage implements OnInit {
     this.puntuacionIncorrectaBonus = this.juegoSeleccionado.PuntuacionIncorrectaBonus;
     this.idpreguntasBasicas = this.juegoSeleccionado.PreguntasBasicas;
     this.idpreguntasBonus = this.juegoSeleccionado.PreguntasBonus;
+    this.primerRanking=true;
     this.identificador = navigator.geolocation.watchPosition((position) => {
       this.lat =  position.coords.latitude;
       this.lng =  position.coords.longitude;
@@ -211,7 +213,7 @@ export class JuegoDeGeocachingPage implements OnInit {
         this.MisAlumnosDelJuegoDeGeocaching = this.calculos.DameListaAlumnosJuegoGeocachingOrdenada(this.juegoSeleccionado.id);
       }
       // this.servidor.connect();
-
+      this.updateRanking();
       setInterval(() => {
         this.updateRanking();
         
@@ -228,7 +230,7 @@ export class JuegoDeGeocachingPage implements OnInit {
     L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v11/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZXJyZXplZXRhIiwiYSI6ImNsZnZnaHVkdDA3MXIzZm83bWduMnc0ZGIifQ.ZKp87eXXMQEO1MNCM_wXKA', {
     maxZoom: 20,
     minZoom: 13,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    attribution: '&copy; <a href="https://www.mapbox.com/">Mapbox</a>'
     }).addTo(this.map);
     window.dispatchEvent(new Event('resize'));
 
@@ -306,6 +308,38 @@ updateRanking(){
       console.error(error);
     }
   );
+  if (this.ranking==3) {
+    document.getElementById("posicionround").classList.remove('inicio');
+    document.getElementById("posicionround").classList.remove('fueratop3');
+    document.getElementById("posicionround").classList.remove('top3');
+    document.getElementById("posicionround").classList.remove('top2');
+    document.getElementById("posicionround").classList.remove('top1');
+    document.getElementById("posicionround").classList.add('top3');
+  }
+  if (this.ranking==2) {
+    document.getElementById("posicionround").classList.remove('inicio');
+    document.getElementById("posicionround").classList.remove('fueratop3');
+    document.getElementById("posicionround").classList.remove('top3');
+    document.getElementById("posicionround").classList.remove('top2');
+    document.getElementById("posicionround").classList.remove('top1');
+    document.getElementById("posicionround").classList.add('top2');
+  }
+  if (this.ranking==1) {
+    document.getElementById("posicionround").classList.remove('inicio');
+    document.getElementById("posicionround").classList.remove('fueratop3');
+    document.getElementById("posicionround").classList.remove('top3');
+    document.getElementById("posicionround").classList.remove('top2');
+    document.getElementById("posicionround").classList.remove('top1');
+    document.getElementById("posicionround").classList.add('top1');
+  }
+  else if(this.primerRanking==false) {
+    document.getElementById("posicionround").classList.remove('inicio');
+    document.getElementById("posicionround").classList.remove('fueratop3');
+    document.getElementById("posicionround").classList.remove('top3');
+    document.getElementById("posicionround").classList.remove('top2');
+    document.getElementById("posicionround").classList.remove('top1');
+    document.getElementById("posicionround").classList.add('fueratop3');
+  }
   console.log(this.ranking);
   this.cd.markForCheck();
   

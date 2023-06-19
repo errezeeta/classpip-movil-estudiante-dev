@@ -46,26 +46,11 @@
     <ion-button id="butInfo" (click)="popoverEvent()" > i </ion-button>
     <div id="padding">
       
-    </div>
-
-
-
-
-
-
-    <!-- redonda con ranking
-    <ion-badge class="rankinground">{{ ranking }}</ion-badge> -->
-
-
-
-
-    
-    
-    
+    </div>    
     <div id="containerBotones">
       <ion-button id="ranking" (click)="RankingClick()"> Ver ranking </ion-button>
-      <ion-button id="posicionround" > {{ranking}} </ion-button>
-      <ion-button #responder [disabled]="!habilitarResponder"   id="contestar" class="lejos" (click) = "ResponderPregunta()"> Responder pregunta</ion-button>
+      <ion-button id="posicionround" class="inicio"> {{ranking}} </ion-button>
+      <ion-button #responder [disabled]="!habilitarResponder"   id="contestar" class="lejos" (click) = "ResponderPregunta()"> Responder <br> pregunta</ion-button>
     </div>
   </ion-content>
   <button id="botonInformacion" mat-button (click)="display()" mat-raised-button color="primary">Oculta info</button>
