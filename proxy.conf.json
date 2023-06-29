@@ -1,7 +1,7 @@
 {
     "*/api/*":{
-        "target":"http://192.168.1.134:3000",
-        "secure": false,
+        "target":"https://192.168.26.96:3000",
+        "secure": true,
         "logLevel": "debug"
     },
     

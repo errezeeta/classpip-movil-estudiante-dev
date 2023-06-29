@@ -463,10 +463,12 @@ recibirPuntos(){
    this.respuestabonus=false;
    this.Nota=0;
    this.index=this.index + 1;
+
    this.puntogeolocalizable=this.puntosgeolocalizables[this.index];
    this.preguntabasica=this.preguntasBasicas[this.index];
    this.preguntabonus=this.preguntasBonus[this.index];
-
+   this.pistaDificil = this.puntogeolocalizable.PistaDificil;
+   this.pistaFacil = this.puntogeolocalizable.PistaFacil;
   if(this.puntogeolocalizable[this.index] == undefined || this.puntogeolocalizable[this.index] == null){
     
     const final = this.alertCtrl.create({
@@ -620,7 +622,6 @@ async llegada() {
 
   this.ubicacion=true;
   console.log('llegada: ' + this.ubicacion);
-  navigator.geolocation.clearWatch (this.identificador);
   
   console.log('llegada al punto');
   console.log('clearwatch');

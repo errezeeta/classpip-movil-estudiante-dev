@@ -1,4 +1,4 @@
-export const host = 'http://localhost:';
+export const host = 'https://192.168.1.136:';
 // export const host = 'http://classpip.upc.edu:';
 //export const hostServer = 'http://147.83.249.79:';
 //export const hostServer = 'http://147.83.118.92:';
